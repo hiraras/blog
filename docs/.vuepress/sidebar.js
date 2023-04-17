@@ -69,9 +69,37 @@ module.exports = [
   },
   {
     title: "web安全",
+    children: [
+      {
+        title: "DDoS（洪水攻击）",
+        path: "/safety/ddos/",
+      },
+      {
+        title: "SQL 注入",
+        path: "/safety/sqlInsert/",
+      },
+      {
+        title: "CSRF",
+        path: "/safety/csrf/",
+      },
+      {
+        title: "XSS",
+        path: "/safety/xss/",
+      },
+    ],
   },
   {
     title: "优化",
+    children: [
+      {
+        title: "渲染优化",
+        path: "/optimize/render/",
+      },
+      {
+        title: "访问资源获取优化",
+        path: "/optimize/get-resource/",
+      },
+    ],
   },
   {
     title: "代码优化/规范/管理",
@@ -93,9 +121,31 @@ module.exports = [
   },
   {
     title: "可视化",
+    children: [
+      // {
+      //   title: "three.js",
+      //   children: [
+      //     {
+      //       title: "纹理",
+      //       path: "/visualization/three/texture/",
+      //     },
+      //   ],
+      // },
+    ],
   },
   {
     title: "服务端",
+    children: [
+      {
+        title: "服务器",
+        children: [
+          {
+            title: "阿里云服务器web服务部署",
+            path: "/backend/server/deploy/",
+          },
+        ],
+      },
+    ],
   },
   {
     title: "算法",
@@ -104,11 +154,11 @@ module.exports = [
     title: "经验",
     children: [
       {
-        title: "框架使用问题",
+        title: "问题",
         children: [
           {
             title: "antd相关",
-            path: "/experience/tool/antd/",
+            path: "/experience/question/antd/",
           },
         ],
       },
@@ -126,6 +176,36 @@ module.exports = [
           {
             title: "eslint配置",
             path: "/experience/configs/eslint/",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "设计模式",
+    children: [
+      {
+        title: "微前端",
+        children: [
+          {
+            title: "single-spa",
+            path: "/designMode/micro-frontend/single-spa/",
+          },
+          {
+            title: "qiankun",
+            path: "/designMode/micro-frontend/qiankun/",
+          },
+          {
+            title: "micro-app",
+            path: "/designMode/micro-frontend/micro-app/",
+          },
+          {
+            title: "JS隔离",
+            path: "/designMode/micro-frontend/js-sandbox/",
+          },
+          {
+            title: "CSS隔离",
+            path: "/designMode/micro-frontend/css-sandbox/",
           },
         ],
       },
