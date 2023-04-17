@@ -24,4 +24,5 @@ module.exports = {
     link: "https://github.com/hiraras",
   },
   head: [["link", { rel: "icon", href: "/img/favicon.ico" }]],
+  extraWatchFiles: [".vuepress/*.js", "**/*.md"],
 };
