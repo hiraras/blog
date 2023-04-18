@@ -6,4 +6,4 @@
 
 参考：[https://zhuanlan.zhihu.com/p/378346507](https://zhuanlan.zhihu.com/p/378346507)
 
-<img src="/img/design-qiankun-single-spa-01.png" />
+<img :src="$withBase('/img/design-qiankun-single-spa-01.png')" />

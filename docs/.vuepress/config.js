@@ -4,7 +4,7 @@ module.exports = {
   lang: "zh-CN",
   title: "hirara's blog",
   description: "记录前端学习历程",
-  base: "/",
+  base: "/blog/",
   locales: {
     "/": {
       lang: "zh-CN",
@@ -15,9 +15,20 @@ module.exports = {
   },
   themeConfig: {
     logo: "/img/header.jpg",
-    nav: [{ text: "组件库", link: "http://www.tinypen.cn" }],
+    nav: [
+      {
+        text: "组件库",
+        items: [
+          { text: "组件", link: "http://www.tinypen.cn/ljmp-antd" },
+          { text: "图标", link: "http://www.tinypen.cn/ljmp-icons" },
+          { text: "图表", link: "http://www.tinypen.cn/ljmp-chart" },
+          { text: "utils", link: "http://www.tinypen.cn/ljmp-utils" },
+        ],
+      },
+    ],
     sidebar,
     footer: false,
+    repo: "https://github.com/hiraras/blog.git",
   },
   author: {
     name: "hirara", // 必需

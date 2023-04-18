@@ -11,7 +11,7 @@
     ```
 
 5.  安装结束会输出对应的宝塔访问地址、账户、密码
-    <img src="/img/backend-server-deploy-01.png" />
+    <img :src="$withBase('/img/backend-server-deploy-01.png')" />
 
 6.  设置安全组，服务器默认没有 8888 端口，需要在安全组中添加 8888 端口，授权对象选 0.0.0.0/0 即可
 7.  访问宝塔面板，安装必要软件
