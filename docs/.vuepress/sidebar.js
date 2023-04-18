@@ -113,6 +113,53 @@ module.exports = [
   },
   {
     title: "CSS",
+    children: [
+      {
+        title: "特性",
+        path: "/css/speciality/",
+      },
+      {
+        title: "flex",
+        path: "/css/flex/",
+      },
+      {
+        title: "question",
+        path: "/css/question/",
+      },
+      {
+        title: "不常用的css",
+        path: "/css/unusual/",
+      },
+      {
+        title: "自适应与响应式布局",
+        path: "/css/media-rem/",
+      },
+      {
+        title: "less",
+        path: "/css/less/",
+      },
+      {
+        title: "sass",
+        path: "/css/sass/",
+      },
+      {
+        title: "grid",
+        path: "/css/grid/",
+      },
+      {
+        title: "实践",
+        children: [
+          {
+            title: "绘制自适应正方形",
+            path: "/css/practice/01/",
+          },
+          {
+            title: "切换主题",
+            path: "/css/practice/transform-theme/",
+          },
+        ],
+      },
+    ],
   },
   {
     title: "HTML",
