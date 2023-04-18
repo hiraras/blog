@@ -3,15 +3,36 @@ module.exports = [
     title: "JavaScript",
     children: [
       {
-        title: "语法 ES5/ES6+",
+        title: "ES5/ES6+",
         children: [
           {
             title: "基础数据类型",
             path: "/JavaScript/ecmascript/dataType/",
           },
           {
+            title: "正则",
+            children: [
+              {
+                title: "基础",
+                path: "/JavaScript/ecmascript/regexp/basic/",
+              },
+              {
+                title: "常用正则",
+                path: "/JavaScript/ecmascript/regexp/examples/",
+              },
+            ],
+          },
+          {
             title: "new做了什么",
             path: "/JavaScript/ecmascript/new/",
+          },
+          {
+            title: "垃圾回收",
+            path: "/JavaScript/ecmascript/recycle/",
+          },
+          {
+            title: "事件循环",
+            path: "/JavaScript/ecmascript/event-loop/",
           },
         ],
       },
@@ -21,6 +42,70 @@ module.exports = [
           {
             title: "IndexedDB",
             path: "/JavaScript/clientAPI/indexedDB/",
+          },
+          {
+            title: "createObjectURL",
+            path: "/JavaScript/clientAPI/createObjectURL/",
+          },
+          {
+            title: "全局错误捕获",
+            path: "/JavaScript/clientAPI/error-catch/",
+          },
+          {
+            title: "requestIdleCallback",
+            path: "/JavaScript/clientAPI/requestIdleCallback/",
+          },
+          {
+            title: "requestAnimationFrame",
+            path: "/JavaScript/clientAPI/requestAnimationFrame/",
+          },
+          {
+            title: "剪切板",
+            path: "/JavaScript/clientAPI/clipboard/",
+          },
+          {
+            title: "自定义event",
+            path: "/JavaScript/clientAPI/custom-event/",
+          },
+          {
+            title: "数据导出为excel",
+            path: "/JavaScript/clientAPI/export-excel/",
+          },
+          {
+            title: "录屏",
+            path: "/JavaScript/clientAPI/record-screen/",
+          },
+        ],
+      },
+      {
+        title: "TypeScript",
+        children: [
+          {
+            title: "基础知识",
+            children: [
+              {
+                title: "类型工具",
+                path: "/JavaScript/ts/basic/tools/",
+              },
+            ],
+          },
+          {
+            title: "进阶示例",
+            children: [
+              {
+                title: "过滤出对象中值为Function类型的键",
+                path: "/JavaScript/ts/advance/01/",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "文件操作",
+        children: [
+          {
+            title: "File类",
+            path: "/JavaScript/file/file-class/",
           },
         ],
       },
@@ -40,6 +125,40 @@ module.exports = [
   },
   {
     title: "前端框架",
+    children: [
+      {
+        title: "React",
+        children: [
+          {
+            title: "基本知识",
+            children: [
+              {
+                title: "key的作用",
+                path: "/frontend-frame/react/basic/key/",
+              },
+            ],
+          },
+          {
+            title: "hooks",
+            children: [
+              {
+                title: "useImperativeHandle",
+                path: "/frontend-frame/react/hooks/useImperativeHandle/",
+              },
+            ],
+          },
+          {
+            title: "实际问题",
+            children: [
+              {
+                title: "为children注入父组件的props",
+                path: "/frontend-frame/react/real-question/01/",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     title: "打包工具",
@@ -119,6 +238,17 @@ module.exports = [
   },
   {
     title: "请求",
+    children: [
+      {
+        title: "通用",
+        children: [
+          {
+            title: "终止http请求",
+            path: "/request/common/abort-request/",
+          },
+        ],
+      },
+    ],
   },
   {
     title: "web安全",
@@ -159,13 +289,16 @@ module.exports = [
     children: [
       {
         title: "git",
-        path: "/CodeManage/git",
         children: [
           {
             title: "git指令",
             path: "/CodeManage/git/command/",
           },
         ],
+      },
+      {
+        title: "immer",
+        path: "/CodeManage/immer/",
       },
     ],
   },
@@ -202,6 +335,21 @@ module.exports = [
   },
   {
     title: "算法",
+    children: [
+      {
+        title: "常用算法",
+        path: "/arithmetic/methods/",
+      },
+      {
+        title: "实践",
+        children: [
+          {
+            title: "数组的所有排列",
+            path: "/arithmetic/practice/01/",
+          },
+        ],
+      },
+    ],
   },
   {
     title: "经验",
@@ -321,6 +469,15 @@ module.exports = [
       {
         title: "LazyImage",
         path: "/practice/LazyImage/",
+      },
+      {
+        title: "utils函数",
+        children: [
+          {
+            title: "转换内存单位",
+            path: "/practice/utils/transform-memory-unit/",
+          },
+        ],
       },
     ],
   },
