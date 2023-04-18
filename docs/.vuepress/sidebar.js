@@ -54,7 +54,60 @@ module.exports = [
                 title: "一些有用的npm开源包",
                 path: "/packTools/webpack/npm/openSourcePackage/",
               },
+              {
+                title: "npm 版本号",
+                path: "/packTools/webpack/npm/version/",
+              },
+              {
+                title: "npm 安装机制",
+                path: "/packTools/webpack/npm/install-process/",
+              },
+              {
+                title: "CJS、ESM、AMD、UMD",
+                path: "/packTools/webpack/npm/module-import/",
+              },
+              {
+                title: "部署私人 npm 服务器",
+                path: "/packTools/webpack/npm/private-packages/",
+              },
+              {
+                title: "配置",
+                path: "/packTools/webpack/npm/npm-config/",
+              },
             ],
+          },
+          {
+            title: "yarn",
+            children: [
+              {
+                title: "yarn 安装机制",
+                path: "/packTools/webpack/yarn/install-process/",
+              },
+            ],
+          },
+          {
+            title: "构建流程",
+            path: "/packTools/webpack/build-process/",
+          },
+          {
+            title: "常用loader",
+            path: "/packTools/webpack/loaders/",
+          },
+          {
+            title: "常用plugin",
+            path: "/packTools/webpack/plugins/",
+          },
+          {
+            title: "打包优化",
+            path: "/packTools/webpack/pack-optimize/",
+          },
+          {
+            title: "热更新原理",
+            path: "/packTools/webpack/hot-update/",
+          },
+          {
+            title: "base 与 PublicPath",
+            path: "/packTools/webpack/base-public-path/",
           },
         ],
       },
