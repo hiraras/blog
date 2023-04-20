@@ -620,3 +620,100 @@ console.log(x === y); // true
   ```
 
   上面代码通过指定 Symbol.unscopables 属性，使得 with 语法块不会在当前作用域寻找 foo 属性，即 foo 将指向外层作用域的变量。
+
+### BitInt
+
+JavaScript 所有数字都保存成 64 位浮点数，这给数值的表示带来了两大限制。一是数值的精度只能到 53 个二进制位（相当于 16 个十进制位），大于这个范围的整数，JavaScript 是无法精确表示，这使得 JavaScript 不适合进行科学和金融方面的精确计算。二是大于或等于 2 的 1024 次方的数值，JavaScript 无法表示，会返回 `Infinity`
+
+```js
+// 超过 53 个二进制位的数值，无法保持精度
+Math.pow(2, 53) === Math.pow(2, 53) + 1; // true
+
+// 超过 2 的 1024 次方的数值，无法表示
+Math.pow(2, 1024); // Infinity
+```
+
+ES2020 引入了一种新的数据类型 BigInt（大整数），来解决这个问题，这是 ECMAScript 的第八种数据类型。BigInt 只用来表示整数，没有位数的限制，任何位数的整数都可以精确表示。
+
+```js
+const a = 2172141653n;
+const b = 15346349309n;
+
+// BigInt 可以保持精度
+a * b; // 33334444555566667777n
+
+// 普通整数无法保持精度
+Number(a) * Number(b); // 33334444555566670000
+```
+
+为了与 Number 类型区别，BigInt 类型的数据必须添加后缀 n。
+
+```js
+1234; // 普通整数
+1234n; // BigInt
+
+// BigInt 的运算
+1n + 2n; // 3n
+```
+
+BigInt 与普通整数是两种值，并不相等
+
+```js
+42n === 42; // false
+```
+
+#### 转化为其他类型
+
+```js
+BigInt(123); // 123n
+BigInt("123"); // 123n
+BigInt(false); // 0n
+BigInt(true); // 1n
+
+new BigInt(); // TypeError
+BigInt(undefined); //TypeError
+BigInt(null); // TypeError
+BigInt("123n"); // SyntaxError
+BigInt("abc"); // SyntaxError
+BigInt(1.5); // RangeError
+BigInt("1.5"); // SyntaxError
+
+Boolean(0n); // false
+Boolean(1n); // true
+Number(1n); // 1
+String(1n); // "1"
+
+// Number.parseInt() 与 BigInt.parseInt() 的对比
+Number.parseInt("9007199254740993", 10);
+// 9007199254740992
+BigInt.parseInt("9007199254740993", 10);
+// 9007199254740993n
+```
+
+#### 运算
+
+数学运算方面，BigInt 类型的+、-、\*和\*\*这四个二元运算符，与 Number 类型的行为一致。除法运算/会舍去小数部分，返回一个整数。
+
+```js
+9n / 5n; // 1n
+
+// BigInt 不能与普通数值进行混合运算
+1n + 1.3; // 报错
+
+// 比较运算符
+0n < 1; // true
+0n < true; // true
+0n == 0; // true
+0n == false; // true
+0n === 0; // false
+
+// 与字符串运算
+"" + 123n; // "123"
+```
+
+几乎所有的数值运算符都可以用在 BigInt，但是有两个例外。
+
+- 不带符号的右移位运算符 `>>>`
+- 一元的求正运算符 `+`
+
+上面两个运算符用在 BigInt 会报错。前者是因为>>>运算符是不带符号的，但是 BigInt 总是带有符号的，导致该运算无意义，完全等同于右移运算符>>。后者是因为一元运算符+在 asm.js 里面总是返回 Number 类型，为了不破坏 asm.js 就规定+1n 会报错。
