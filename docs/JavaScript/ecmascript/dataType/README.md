@@ -621,7 +621,7 @@ console.log(x === y); // true
 
   上面代码通过指定 Symbol.unscopables 属性，使得 with 语法块不会在当前作用域寻找 foo 属性，即 foo 将指向外层作用域的变量。
 
-### BitInt
+### BigInt
 
 JavaScript 所有数字都保存成 64 位浮点数，这给数值的表示带来了两大限制。一是数值的精度只能到 53 个二进制位（相当于 16 个十进制位），大于这个范围的整数，JavaScript 是无法精确表示，这使得 JavaScript 不适合进行科学和金融方面的精确计算。二是大于或等于 2 的 1024 次方的数值，JavaScript 无法表示，会返回 `Infinity`
 
