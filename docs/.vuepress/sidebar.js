@@ -10,6 +10,10 @@ module.exports = [
             path: "/JavaScript/ecmascript/dataType/",
           },
           {
+            title: "继承",
+            path: "/JavaScript/ecmascript/extends/",
+          },
+          {
             title: "正则",
             children: [
               {
