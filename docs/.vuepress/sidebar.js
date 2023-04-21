@@ -14,6 +14,10 @@ module.exports = [
             path: "/JavaScript/ecmascript/extends/",
           },
           {
+            title: "this 指向",
+            path: "/JavaScript/ecmascript/this/",
+          },
+          {
             title: "正则",
             children: [
               {

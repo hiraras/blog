@@ -23,3 +23,5 @@
 **react-ace**：带行号的文本编辑组件
 
 **animate.css**：[css 动画](https://animate.style/)
+
+**gulp-imagemin**: 图片压缩
