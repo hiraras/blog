@@ -18,6 +18,10 @@ module.exports = [
             path: "/JavaScript/ecmascript/this/",
           },
           {
+            title: "作用域与闭包",
+            path: "/JavaScript/ecmascript/action-scope/",
+          },
+          {
             title: "正则",
             children: [
               {

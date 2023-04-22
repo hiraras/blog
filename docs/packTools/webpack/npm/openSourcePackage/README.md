@@ -25,3 +25,5 @@
 **animate.css**：[css 动画](https://animate.style/)
 
 **gulp-imagemin**: 图片压缩
+
+**QRCode.js**：将文字转为二维码
