@@ -204,6 +204,10 @@ module.exports = [
                 title: "useImperativeHandle",
                 path: "/frontend-frame/react/hooks/useImperativeHandle/",
               },
+              {
+                title: "useState",
+                path: "/frontend-frame/react/hooks/useState/",
+              },
             ],
           },
           {
