@@ -201,12 +201,16 @@ module.exports = [
             title: "hooks",
             children: [
               {
-                title: "useImperativeHandle",
-                path: "/frontend-frame/react/hooks/useImperativeHandle/",
-              },
-              {
                 title: "useState",
                 path: "/frontend-frame/react/hooks/useState/",
+              },
+              {
+                title: "useEffect",
+                path: "/frontend-frame/react/hooks/useEffect/",
+              },
+              {
+                title: "useImperativeHandle",
+                path: "/frontend-frame/react/hooks/useImperativeHandle/",
               },
             ],
           },
