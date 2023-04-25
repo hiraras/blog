@@ -175,6 +175,12 @@ module.exports = [
   },
   {
     title: "HTML",
+    children: [
+      {
+        title: "回流和重绘",
+        path: "/html/reflow-repaint/",
+      },
+    ],
   },
   {
     title: "移动端",
@@ -207,6 +213,10 @@ module.exports = [
               {
                 title: "useEffect",
                 path: "/frontend-frame/react/hooks/useEffect/",
+              },
+              {
+                title: "useLayoutEffect",
+                path: "/frontend-frame/react/hooks/useLayoutEffect/",
               },
               {
                 title: "useImperativeHandle",
