@@ -554,6 +554,10 @@ module.exports = [
             title: "转换内存单位",
             path: "/practice/utils/transform-memory-unit/",
           },
+          {
+            title: "对象字符串（非json）转成json对象",
+            path: "/practice/utils/transform-obj-str-to-json/",
+          },
         ],
       },
     ],
