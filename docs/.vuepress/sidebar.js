@@ -10,6 +10,10 @@ module.exports = [
             path: "/JavaScript/ecmascript/dataType/",
           },
           {
+            title: "let 和 const",
+            path: "/JavaScript/ecmascript/let-const/",
+          },
+          {
             title: "继承",
             path: "/JavaScript/ecmascript/extends/",
           },
