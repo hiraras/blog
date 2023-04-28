@@ -55,4 +55,4 @@ block formatter context（块级格式上下文）是 web 页面可视化 css �
 2. opacity: 0; 占据位置、且可以点击
 3. display:none; 不占据位置，且无法点击
 4. position: aboslute;left: -999999px; 移出屏幕
-5. width:0;height:0; 设置宽高不可见
+5. width: 0;height: 0;overflow: hidden; 设置宽高不可见
