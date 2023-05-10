@@ -14,6 +14,10 @@ module.exports = [
             path: "/JavaScript/ecmascript/let-const/",
           },
           {
+            title: "解构赋值",
+            path: "/JavaScript/ecmascript/destructuring/",
+          },
+          {
             title: "继承",
             path: "/JavaScript/ecmascript/extends/",
           },
