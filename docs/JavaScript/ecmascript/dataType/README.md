@@ -118,6 +118,9 @@ Number({ a: 1 }); // NaN
 Number([1, 2, 3]); // NaN，数组的转化实际是先执行toString，1,2,3
 Number([5]); // 5
 Number([]); // 0
+// 二进制和8进制转化为10进制
+Number("0b111"); // 7
+Number("0o10"); // 8
 ```
 
 String

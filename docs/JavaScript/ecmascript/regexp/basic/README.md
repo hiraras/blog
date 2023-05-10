@@ -1,7 +1,27 @@
 ## 正则
 
+### {}
+
+- 量词，匹配多个相同的模式
+- es6 新增了 u 修饰符，多了一种表示字符的方式
+
+```js
+/^(ab){3}$/.test('ababab') // true，匹配3个 ab
+/^(ab){3,}$/.test('abababa') // false，匹配3个及以上的 ab，结尾的 a 没匹配上
+/^(ab){3,}$/.test('abababab') // true，匹配3个及以上的 ab
+/^(ab){3,5}$/.test('ababababab') // true，匹配3-5个 ab
+```
+
+```js
+// 新的字符表示方式
+/\u{61}/u.test('a') // true
+/\u{20BB7}/u.test('𠮷') // true
+/\u{61}/.test('a') // false，没有u修饰符被解释为量词，即匹配61个u
+```
+
 ### 问号相关
 
+- 匹配 0|1 个模式
 - 前瞻
   exp1(?=exp2) 查找 exp2 前面的 exp1
 - 后顾
@@ -12,6 +32,11 @@
   (?<!exp2)exp1 查找前面不是 exp2 的 exp1
 
 ### 示例
+
+```js
+/^(ab)?$/.test('') // true
+/^(ab)?$/.test('ab') // true
+```
 
 ```JavaScript
 const { log: lg } = console
