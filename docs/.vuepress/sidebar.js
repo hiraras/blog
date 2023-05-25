@@ -379,6 +379,10 @@ module.exports = [
             title: "git指令",
             path: "/CodeManage/git/command/",
           },
+          {
+            title: "git配置",
+            path: "/CodeManage/git/config/",
+          },
         ],
       },
       {

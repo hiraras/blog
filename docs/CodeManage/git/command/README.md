@@ -51,3 +51,5 @@ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Crese
 **git config --global core.autocrlf false**：配置 git 提交修改时忽略 `CRLF` 格式
 
 **git config --get core.autocrlf**
+
+**git remote remove origin**: 删除 origin
