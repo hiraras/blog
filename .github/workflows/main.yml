@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -15,6 +16,7 @@ jobs:
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         TARGET_BRANCH: master
+        BRANCH: pages
         BUILD_SCRIPT: yarn && yarn build
         BUILD_DIR: docs/.vuepress/dist
         # CNAME: https://www.xxx.com
