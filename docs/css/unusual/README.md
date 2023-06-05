@@ -56,3 +56,13 @@ display: -webkit-box;
   overflow: auto;
 }
 ```
+
+渐变文本：
+
+```css
+.gradient-text {
+  background-image: linear-gradient(60deg, #e21143, #ffb03a);
+  background-clip: text;
+  color: transparent;
+}
+```

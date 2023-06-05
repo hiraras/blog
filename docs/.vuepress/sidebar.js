@@ -54,6 +54,10 @@ module.exports = [
             title: "事件循环",
             path: "/JavaScript/ecmascript/event-loop/",
           },
+          {
+            title: "web worker",
+            path: "/JavaScript/ecmascript/web-worker/",
+          },
         ],
       },
       {
@@ -208,6 +212,19 @@ module.exports = [
               {
                 title: "key的作用",
                 path: "/frontend-frame/react/basic/key/",
+              },
+              {
+                title: "ref",
+                path: "/frontend-frame/react/basic/ref/",
+              },
+            ],
+          },
+          {
+            title: "api",
+            children: [
+              {
+                title: "forceUpdate",
+                path: "/frontend-frame/react/api/force-update/",
               },
             ],
           },
@@ -587,6 +604,27 @@ module.exports = [
           {
             title: "面试复习",
             path: "/other/interview/review/",
+          },
+          {
+            title: "面试题准备",
+            children: [
+              {
+                title: "react",
+                path: "/other/interview/prepare/react/",
+              },
+              {
+                title: "http",
+                path: "/other/interview/prepare/http/",
+              },
+              {
+                title: "webpack",
+                path: "/other/interview/prepare/webpack/",
+              },
+              {
+                title: "一般问题",
+                path: "/other/interview/prepare/normal/",
+              },
+            ],
           },
         ],
       },
