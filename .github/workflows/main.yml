@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -14,9 +13,8 @@ jobs:
       - name: vuepress-deploy
         uses: jenkey2011/vuepress-deploy@master
         env:
-          ACCESS_TOKEN: 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
+          ACCESS_TOKEN: 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
+          TARGET_REPO: hiraras/blog
           TARGET_BRANCH: master
-          BRANCH: pages
           BUILD_SCRIPT: yarn && yarn build
           BUILD_DIR: docs/.vuepress/dist
-          # CNAME: https://www.xxx.com
