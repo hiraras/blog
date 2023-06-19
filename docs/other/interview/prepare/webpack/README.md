@@ -101,3 +101,59 @@ module.exports = {
   mode: "production",
 };
 ```
+
+前端工程化的理解？
+
+工程化需要借助 webpack、vite 等构建工具。浏览器能识别的只有 html、js、css，对一些好用的语法、工具（es6+，less、ts）无法直接识别，所以需要一些工具对这些无法识别的语法进行转化，这个过程可能需要开发者每次修改某些文件就通过命令进行重新转化，非常麻烦，也容易出错（转化可能需要多个步骤，需要确保步骤的准确），使用构建工具，监听文件变化并自动进行转化工作，让开发者将主要精力集中在代码开发上就是工程化
+
+简而言之，通过构建工具将复杂的前端项目，自动的进行编译、转化、优化等操作，让代码能在浏览器运行
+
+一个构建工具承担了哪些脏活累活
+
+1. 模块化开发支持：支持直接从 node_modules 里引入代码 + 多种模块化支持
+2. 处理代码兼容性：比如 babel 语法降级，less、ts 语法转换（其实是将这些语法对应的处理工具集成进来自动化处理）
+3. 提高项目性能：压缩文件，代码分割
+4. 优化开发体验：
+
+- 构建工具自动监听文件的变化，当文件变化后自动帮你调用对应的集成工具进行重新打包，然后浏览器重新运行（热更新）
+- 开发服务器：跨域的问题
+
+webpack 随着项目增大打包效率持续下降，并很难提升（跟构建过程有关）
+
+如果一旦要改将会动到 webpack 的大动脉
+
+webpack 支持多种模块化
+
+```js
+// 这一段代码最终会到浏览器里取运行
+
+const lodash = require('lodash') // commonjs
+const Vue from 'vue' // es module
+```
+
+webpack 的编译原理：AST 抽象语法分析工具 分析出你写的这个 js 文件有哪些导入和导出操作
+
+构建工具是运行在服务端的
+
+```js
+// webpack转化结果，多种模块化语法进行了兼容
+const lodash = webpack_require("lodash");
+const Vue = webpack_require("vue");
+```
+
+```js
+(function (modules) {
+  function webpack_require() {
+    // ...
+  }
+  // 入口是 index.js ，通过webpack配置
+  modules[entry](webpack_require);
+})({
+  "index.js": (webpack_require) => {
+    const lodash = webpack_require("lodash");
+    const Vue = webpack_require("vue");
+  },
+});
+```
+
+因为 webpack 支持多种模块化，它一开始必须要统一模块化代码，意味着它需要将所有的依赖全部读一遍

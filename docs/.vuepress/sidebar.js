@@ -108,6 +108,10 @@ module.exports = [
             title: "基础知识",
             children: [
               {
+                title: "常用操作",
+                path: "/JavaScript/ts/basic/normal/",
+              },
+              {
                 title: "类型工具",
                 path: "/JavaScript/ts/basic/tools/",
               },
@@ -336,6 +340,10 @@ module.exports = [
         title: "gulp",
         path: "/packTools/gulp/",
       },
+      {
+        title: "vite",
+        path: "/packTools/vite/",
+      },
     ],
   },
   {
@@ -445,6 +453,10 @@ module.exports = [
       {
         title: "常用算法",
         path: "/arithmetic/methods/",
+      },
+      {
+        title: "面试问题",
+        path: "/arithmetic/interview/",
       },
       {
         title: "实践",
