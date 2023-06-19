@@ -175,6 +175,10 @@ module.exports = [
         path: "/css/grid/",
       },
       {
+        title: "css 模块化",
+        path: "/css/module/",
+      },
+      {
         title: "实践",
         children: [
           {
