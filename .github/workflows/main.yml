@@ -7,6 +7,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
 
+      - name: Build
+        run: npm install && npm run build
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
