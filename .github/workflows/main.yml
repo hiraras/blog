@@ -27,6 +27,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: jenkey2011/vuepress-deploy@master
         with:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: hiraras/blog.github.io # 将 <your-username> 替换为你的 GitHub 用户名
           TARGET_BRANCH: gh-pages # 这里的分支名称需要根据你的实际情况进行调整
