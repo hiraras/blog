@@ -1,5 +1,5 @@
 name: Build and Deploy
-on: [push]
+on: [push] # 监听push操作
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -8,10 +8,10 @@ jobs:
         uses: actions/checkout@master
 
       - name: vuepress-deploy
-        uses: jenkey2011/vuepress-deploy@master
+        uses: jenkey2011/vuepress-deploy@master # 这是一个打包发布工具
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          TARGET_REPO: hiraras/blog
-          TARGET_BRANCH: gh-pages
-          BUILD_SCRIPT: yarn && yarn docs:build
-          BUILD_DIR: docs/.vuepress/dist
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 在github项目中配置的环境变量，值为 Personal access token 中生成的token
+          TARGET_REPO: hiraras/blog # 打包后的目标仓库
+          TARGET_BRANCH: gh-pages # 打包后的目标分支，gh-pages会自动发布到github pages
+          BUILD_SCRIPT: yarn && yarn docs:build # 构建命令
+          BUILD_DIR: docs/.vuepress/dist # 构建产物的路径

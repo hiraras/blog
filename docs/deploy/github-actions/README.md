@@ -46,4 +46,12 @@ jobs:
    - New repository secret
    - 创建 ACCESS_TOKEN ,值为上面的 token
 
-5. 后续提交就会自动执行流水线啦
+5. 在远程创建 gh-pages 分支
+
+6. 在 github pages 中配置发布分支
+
+- 进到对应项目
+  - Settings
+  - Pages
+
+7. 后续提交就会自动执行流水线啦
