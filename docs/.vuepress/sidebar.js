@@ -422,6 +422,12 @@ module.exports = [
   },
   {
     title: "部署",
+    children: [
+      {
+        title: "使用 github-actions 自动部署",
+        path: "/deploy/github-actions/",
+      },
+    ],
   },
   {
     title: "可视化",
