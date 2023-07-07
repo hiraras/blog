@@ -1,6 +1,6 @@
 ## 使用 github-actions 建立打包发布流水线
 
-### 发布 vuepress 到 github pages
+### 发布 vuepress(1.x.x) 到 github pages
 
 1. 建立项目
 
@@ -50,8 +50,8 @@ jobs:
 
 6. 在 github pages 中配置发布分支
 
-- 进到对应项目
-  - Settings
-  - Pages
+   - 进到对应项目
+   - Settings
+   - Pages
 
 7. 后续提交就会自动执行流水线啦

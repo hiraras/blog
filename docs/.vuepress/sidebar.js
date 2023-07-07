@@ -475,6 +475,10 @@ module.exports = [
             title: "数组的所有排列",
             path: "/arithmetic/practice/01/",
           },
+          {
+            title: "深拷贝",
+            path: "/arithmetic/practice/02/",
+          },
         ],
       },
     ],
