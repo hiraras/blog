@@ -281,27 +281,27 @@ module.exports = [
             children: [
               {
                 title: "一些有用的npm开源包",
-                path: "/packTools/webpack/npm/openSourcePackage/",
+                path: "/pack-tools/webpack/npm/open-source-package/",
               },
               {
                 title: "npm 版本号",
-                path: "/packTools/webpack/npm/version/",
+                path: "/pack-tools/webpack/npm/version/",
               },
               {
                 title: "npm 安装机制",
-                path: "/packTools/webpack/npm/install-process/",
+                path: "/pack-tools/webpack/npm/install-process/",
               },
               {
                 title: "CJS、ESM、AMD、UMD",
-                path: "/packTools/webpack/npm/module-import/",
+                path: "/pack-tools/webpack/npm/module-import/",
               },
               {
                 title: "部署私人 npm 服务器",
-                path: "/packTools/webpack/npm/private-packages/",
+                path: "/pack-tools/webpack/npm/private-packages/",
               },
               {
                 title: "配置",
-                path: "/packTools/webpack/npm/npm-config/",
+                path: "/pack-tools/webpack/npm/npm-config/",
               },
             ],
           },
@@ -310,43 +310,43 @@ module.exports = [
             children: [
               {
                 title: "yarn 安装机制",
-                path: "/packTools/webpack/yarn/install-process/",
+                path: "/pack-tools/webpack/yarn/install-process/",
               },
             ],
           },
           {
             title: "构建流程",
-            path: "/packTools/webpack/build-process/",
+            path: "/pack-tools/webpack/build-process/",
           },
           {
             title: "常用loader",
-            path: "/packTools/webpack/loaders/",
+            path: "/pack-tools/webpack/loaders/",
           },
           {
             title: "常用plugin",
-            path: "/packTools/webpack/plugins/",
+            path: "/pack-tools/webpack/plugins/",
           },
           {
             title: "打包优化",
-            path: "/packTools/webpack/pack-optimize/",
+            path: "/pack-tools/webpack/pack-optimize/",
           },
           {
             title: "热更新原理",
-            path: "/packTools/webpack/hot-update/",
+            path: "/pack-tools/webpack/hot-update/",
           },
           {
             title: "base 与 PublicPath",
-            path: "/packTools/webpack/base-public-path/",
+            path: "/pack-tools/webpack/base-public-path/",
           },
         ],
       },
       {
         title: "gulp",
-        path: "/packTools/gulp/",
+        path: "/pack-tools/gulp/",
       },
       {
         title: "vite",
-        path: "/packTools/vite/",
+        path: "/pack-tools/vite/",
       },
     ],
   },
@@ -373,7 +373,7 @@ module.exports = [
       },
       {
         title: "SQL 注入",
-        path: "/safety/sqlInsert/",
+        path: "/safety/sql-insert/",
       },
       {
         title: "CSRF",
@@ -406,17 +406,17 @@ module.exports = [
         children: [
           {
             title: "git指令",
-            path: "/CodeManage/git/command/",
+            path: "/code-manage/git/command/",
           },
           {
             title: "git配置",
-            path: "/CodeManage/git/config/",
+            path: "/code-manage/git/config/",
           },
         ],
       },
       {
         title: "immer",
-        path: "/CodeManage/immer/",
+        path: "/code-manage/immer/",
       },
     ],
   },
@@ -522,23 +522,23 @@ module.exports = [
         children: [
           {
             title: "single-spa",
-            path: "/designMode/micro-frontend/single-spa/",
+            path: "/design-mode/micro-frontend/single-spa/",
           },
           {
             title: "qiankun",
-            path: "/designMode/micro-frontend/qiankun/",
+            path: "/design-mode/micro-frontend/qiankun/",
           },
           {
             title: "micro-app",
-            path: "/designMode/micro-frontend/micro-app/",
+            path: "/design-mode/micro-frontend/micro-app/",
           },
           {
             title: "JS隔离",
-            path: "/designMode/micro-frontend/js-sandbox/",
+            path: "/design-mode/micro-frontend/js-sandbox/",
           },
           {
             title: "CSS隔离",
-            path: "/designMode/micro-frontend/css-sandbox/",
+            path: "/design-mode/micro-frontend/css-sandbox/",
           },
         ],
       },
@@ -552,11 +552,11 @@ module.exports = [
         children: [
           {
             title: "vscode 常用插件及操作",
-            path: "/Tools/vscode/pluginAndOpt/",
+            path: "/tools/vscode/plugin-and-opt/",
           },
           {
             title: "vscode snippet",
-            path: "/Tools/vscode/snippet/",
+            path: "/tools/vscode/snippet/",
           },
         ],
       },
@@ -565,13 +565,13 @@ module.exports = [
         children: [
           {
             title: "chrome使用技巧",
-            path: "Tools/chrome/use/",
+            path: "tools/chrome/use/",
           },
         ],
       },
       {
         title: "其他软件、工具",
-        path: "/Tools/other/",
+        path: "/tools/other/",
       },
     ],
   },
