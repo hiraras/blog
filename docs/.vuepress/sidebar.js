@@ -654,6 +654,10 @@ module.exports = [
           },
         ],
       },
+      {
+        title: "待学习",
+        path: "/other/prepare-study/",
+      },
     ],
   },
 ];
