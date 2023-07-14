@@ -23,6 +23,8 @@ create-vite 和 vite 的关系是什么？
 
 create-vite 内置了 vite
 
+### 为什么浏览器 script 标签设置 type="module" 后无法使用 import 'xxxx' 导入 node_modules 包
+
 在默认情况下，我们的 esmodule 去导入资源的时候，要么是绝对路径，要么是相对路径（script 标签 type="module"），因此像 `import _ from 'lodash'` 这样的模块导入，在浏览器中无法无法找到对应的文件。
 
 究其原因，是因为浏览器中加载资源是靠 http 请求，如果自动去 node_modules 目录下寻找资源的话，会发起很多个 http 请求，造成性能问题
@@ -143,3 +145,10 @@ export default defineConfig({
   envPrefix: ["VITE_", "BASE_"], // VITE_ 和 BASE_ 开头的环境变量会被注入到 import.meta.env
 });
 ```
+
+### vite 是怎么让浏览器可以识别 .vue 文件的
+
+1. vite 在开发阶段也会有一个开发服务器，它实际上就是一个 node 起的服务
+2. 当浏览器请求这个服务下的文件时，这个服务会去匹配文件路径和文件类型，然后读取文件并返回文件字符串，并设置相应的 Content-Type 告诉浏览器如何解析（对于浏览器来说返回的都是字符串罢了，但是这个字符串的解析方式就可以根据 Content-Type 设置）
+3. 在读取文件和返回内容之间还对文件进行一些操作，如果是 .vue 文件，读取完文件后会将其转化为 js 代码，涉及到了 AST 语法转换
+4. 如果是 .vue 文件，在返回的时候会设置 Content-type="text/javascript"，让浏览器以 js 的方式解析 .vue 文件
