@@ -183,3 +183,69 @@ vite 天生就支持对 css 文件的直接处理
 **less 预处理器**
 
 只需要安装 less npm 包，同时开启 css 模块化也是命名文件为 `xxx.module.less`
+
+### vite 配置文件中 css 配置流程（preprocessorOptions 篇）
+
+主要是用来配置 css 预处理的一些全局参数
+
+```js
+// 在config文件中
+{
+  // ...,
+  css: {
+    preprocessorOptions: { // key + config，key代表预处理器的名
+      less: {}, // 整个配置对象都会最终给到less的行参数（全局参数）
+      sass: {}
+    }
+  }
+}
+```
+
+如果没有使用构建工具，我们又想去编译 less 文件的话，需要安装 less 包，并使用 lessc 来编译
+
+```r
+yarn add less # lessc的编译器
+# 类似于安装了node，就可以使用 node index.js 来执行脚本
+# 安装了less后就可以使用lessc编译less文件
+npx lessc style.less
+```
+
+**定义 less 全局变量（在 webpack 中使用 less-loader 配置）**
+
+以前使用 less 变量会建一个文件，用来专门存储各种样式变量，通过使用 `@import url('')` 的方式引入到各个需要的地方，但是这个方式不适合用来做全局变量（主题切换等）
+
+- 使用 @import 性能不是那么好
+- 虽然配置到了一个文件中，但是可以预见许多文件都需要引用进来
+
+```js
+{
+  // ...,
+  css: {
+    preprocessorOptions: {
+      less: {
+        globalVars: {
+          mainColor: 'red', // 使用的时候使用 @mainColor
+        }
+      },
+    }
+  }
+}
+```
+
+**css sourceMap**
+
+文件之间的索引
+
+压缩之后的文件代码的行无法追踪，使用 sourceMap 可以映射回源文件的代码位置
+
+```js
+{
+  // ...,
+  css: {
+    preprocessorOptions: {
+      less: {},
+    },
+    devSourceMap: true
+  }
+}
+```
