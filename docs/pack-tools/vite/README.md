@@ -249,3 +249,117 @@ npx lessc style.less
   }
 }
 ```
+
+### postcss
+
+vite 天生对 postcss 有非常良好的支持
+
+postcss 保证了 css 在执行起来是万无一失的
+
+1. 保证在各个浏览器中的兼容性（前缀补全）
+2. 对未来 css 属性的使用降级问题（使用 var(全局变量)）
+
+**postcss 工作流程：**
+
+我们写的代码 ---> postcss ---> less ---> 再次对未来的高级 css 语法进行降级 ---> 前缀补全 ---> 浏览器客户端
+
+其中 postcss 可以对 less 中的嵌套、变量等写法进行转化，即 postcss 可以包括 less；语法降级、前缀补全是 postcss 的功能
+
+注意：postcss 原来是支持 less 的一些编译功能，提供了一些插件来帮助编译，但是因为每次 less 和 sass 一更新就会导致提供的插件也需要更新，好像没什么必要而且需要成本，所以目前这些插件就不再维护了
+
+**所以产生了一个新的说法：postcss 是后处理器（先处理完 less、sass 的一些语法，再来进行 css 降级等）**
+
+**使用：**
+
+1. 安装依赖
+
+```r
+# postcss-cli 提供了一些命令
+yarn add postcss-cli postcss -D
+# 使用postcss编译css文件，输出为result.css
+npx postcss style.css -o result.css
+```
+
+2. 书写描述文件
+
+postcss.config.js
+
+```js
+// postcss打包过程实际还有许多插件要用到
+// 例如降级插件、编译插件等
+// 使用 postcss-preset-env 插件里边就包含了这些东西
+
+const postcssPresetEnv = require("postcss-preset-env");
+
+module.exports = {
+  plugins: [postcssPresetEnv(/* pluginOptions */)],
+};
+```
+
+测试：
+
+```css
+/* 源文件 */
+:root {
+  --globalColor: skyblue;
+}
+
+.text {
+  color: var(--globalColor);
+  display: flex;
+}
+```
+
+```r
+npx postcss high-css.css -o result.css
+```
+
+```css
+/* 结果 */
+:root {
+  --globalColor: skyblue;
+}
+
+.text {
+  /* 多加了一句这个，保证了第版本浏览器的识别 */
+  color: skyblue;
+  color: var(--globalColor);
+  display: flex;
+}
+```
+
+**注意**：如果定义的变量在另一个文件里（定义了一个 variable.css 文件，用来保存各种变量）,那么这个文件不会做降级处理(没有上面的 color: skyblue)，因为 postcss 处理变量是以文件为单位的，这个文件处理完里边的变量就被丢弃了，所以需要配置 variable.css 文件里的变量一直有效
+
+```js
+{
+  // ...,
+  postcss: {
+    plugins: [
+      postcssPresetEnv({
+        importFrom: path.resolve(__dirname, "./variable.css"),
+      }),
+    ],
+  },
+}
+```
+
+### 在 vite 中配置 postcss
+
+```js
+const postcssPresetEnv = require('postcss-preset-env')
+
+{
+  // ...,
+  css: {
+    devSourceMap: true,
+    postcss: {
+      // 这里的配置就是 postcss.config.js 的配置
+      plugins: [postcssPresetEnv] // 不需要配置其他项的时候可以直接传入不需要 postcssPresetEnv()
+    }
+  }
+}
+```
+
+**也可以直接使用 postcss.config.js，会自动读取**
+
+都有的话，vite.config.js 里的优先级高于 postcss.config.js
