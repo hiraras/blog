@@ -152,3 +152,34 @@ export default defineConfig({
 2. 当浏览器请求这个服务下的文件时，这个服务会去匹配文件路径和文件类型，然后读取文件并返回文件字符串，并设置相应的 Content-Type 告诉浏览器如何解析（对于浏览器来说返回的都是字符串罢了，但是这个字符串的解析方式就可以根据 Content-Type 设置）
 3. 在读取文件和返回内容之间还对文件进行一些操作，如果是 .vue 文件，读取完文件后会将其转化为 js 代码，涉及到了 AST 语法转换
 4. 如果是 .vue 文件，在返回的时候会设置 Content-type="text/javascript"，让浏览器以 js 的方式解析 .vue 文件
+
+### vite 中对 css 以及 css 模块化的处理
+
+vite 天生就支持对 css 文件的直接处理
+
+对 css 文件的处理
+
+1. vite 读取到 css 文件的引用后，直接去使用 fs 模块读取 css 文件的代码
+2. 创建一个 style 标签，将读取到的内容 copy 进 style 标签里
+3. 将 style 标签插入到 index.html 的 head 中
+4. 另外，将该 css 文件的内容替换为 js 脚本（方便热更新和 css 模块化），同时设置 Content-Type 为 js，从而让浏览器以 JS 脚本的形式来执行该 css 后缀文件
+
+**css 模块化**
+
+1. 将 css 文件命名为 `xxx.module.css`
+2. 导入该 css 文件的时候使用 default 方式 `import styles from './xxx.module.css'`
+3. styles 变量是个对象，保存了 css 文件的类名作为键，带 hash 值的真实类名为值
+4. 使用的时候使用 styles.类名来使用，注入到 html 中的 css 类型就是带 hash 的类名
+
+**原理：**
+
+1. module 是一种约定，表示开启 css 模块化
+2. 他会将你的所有类名进行一定进行规则的替换
+3. 同时创建一个映射对象
+4. 将替换后的内容塞入 style 标签然后放入 head 标签中
+5. 将原 css 文件抹除，替换为 js 脚本（同 css 文件的处理方式）
+6. 将创建的映射对象在脚本中进行默认导出
+
+**less 预处理器**
+
+只需要安装 less npm 包，同时开启 css 模块化也是命名文件为 `xxx.module.less`
