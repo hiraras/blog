@@ -363,3 +363,46 @@ const postcssPresetEnv = require('postcss-preset-env')
 **也可以直接使用 postcss.config.js，会自动读取**
 
 都有的话，vite.config.js 里的优先级高于 postcss.config.js
+
+### vite 加载静态资源
+
+在 node 中，除了动态 Api 以外，99%都可以被视作静态资源
+
+vite 对静态资源基本上是开箱即用的，除了一些特殊情况（svg）
+
+**img:**
+
+```js
+import src from "./src/assets/images/plane.jpg";
+const img = document.createElement("img");
+img.src = src;
+document.body.appendChild(img);
+```
+
+**json**
+
+```json
+{
+  "name": "alice",
+  "age": 20
+}
+```
+
+```js
+import { name, age } from "./src/assets/json/index.json";
+console.log(name, age); // json读取可以直接读取部分属性哦！而且可以tree-shaking
+```
+
+### 配置路径别名
+
+```js
+{
+  // ...,
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@assets": path.resolve(__dirname, "./src/assets"),
+    },
+  },
+}
+```
