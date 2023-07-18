@@ -102,6 +102,19 @@ module.exports = [
         ],
       },
       {
+        title: "node",
+        children: [
+          {
+            title: "node的原理",
+            path: "/JavaScript/node/principle/",
+          },
+          {
+            title: "path模块",
+            path: "/JavaScript/node/path/",
+          },
+        ],
+      },
+      {
         title: "TypeScript",
         children: [
           {
