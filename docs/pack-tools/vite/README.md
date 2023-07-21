@@ -449,3 +449,114 @@ svgElement.onmouseenter = function () {
 **resolve.alias 原理**
 
 在 vite 服务端读取到对应文件时，会根据 alias 配置替换源文件中的对应的字符串，将它替换为可以正常读取的文件路径，本质就是做了一个字符串的 replace 操作
+
+### vite 配置文件中对静态资源在生产环境中的配置
+
+```js
+{
+  // ...,
+  build: {
+    rollupOptions: {
+      // 配置rollup的一些构建策略
+      output: {
+        // ext为拓展名，name为文件名，hash代表将你的文件名和文件内容进行组合计算的结果
+        assetFileNames: "[hash].[name].[ext]",
+      },
+    },
+    assetsInlineLimit: 4096, // 将图片大小小于该值的，转化为base64，默认为4kb
+    outDir: "dist", // 打包输出目录
+    assetsDir: "static", // 静态资源的目录
+    emptyOutDir: true, // 清除输出目录中的所有文件
+  },
+}
+```
+
+## vite 插件
+
+插件是什么？
+
+vite 会在生命周期的不同阶段中去调用不同的插件以达到不同的目的
+
+> 生命周期：vite 从开始执行到执行结束，那么这整个过程就是 vite 的生命周期，vite、webpack、vue、react、redux 等都有自己的生命周期
+
+### 使用插件
+
+```js
+import { ViteAliases } from "vite-aliases";
+{
+  // ...,
+  plugins: [
+    ViteAliases({
+      // ...options
+    }),
+  ];
+}
+```
+
+### 手写自定义插件
+
+在 plugins 数组里的每一个插件都是一个配置对象，该对象包含一个 `config` 属性，是一个函数，该函数返回的对象最终会和 vite.config.js 产出的对象 merge 为一个最终的配置对象，config 函数的具体信息可以看下面的手写 vite-aliases 插件的注释
+
+在插件中，你可以直接 export 一个带 config 属性的对象，用来覆盖某些配置，也可以导出一个函数用来生成带 config 属性的对象，这样就可以传入一些插件配置
+
+```js
+// 直接导出一个配置对象
+// 下面代码覆盖了vite.config.js中的 assetsInlineLimit 配置大小
+module.exports = {
+  config() {
+    return {
+      build: {
+        assetsInlineLimit: 409600000, // 将图片大小小于该值的，转化为base64，默认为4kb
+      },
+    };
+  },
+};
+```
+
+```js
+// 导出一个函数
+// 下面手写一个 vite-aliases 插件
+const path = require("path");
+const fs = require("fs");
+
+const getFolders = (dirList = [], basePath) => {
+  return dirList.filter((dir) => {
+    const stat = fs.statSync(path.resolve(__dirname, `${basePath}/${dir}`));
+    return stat.isDirectory();
+  });
+};
+
+const getResolveAlias = (basePath = "") => {
+  const dirs = fs.readdirSync(path.resolve(__dirname, basePath));
+  const folders = getFolders(dirs, basePath);
+  const alias = folders.reduce(
+    (prev, folder) => {
+      return {
+        ...prev,
+        [`@${folder}`]: path.resolve(__dirname, `${basePath}/${folder}`),
+      };
+    },
+    {
+      "@": path.resolve(__dirname, basePath),
+    }
+  );
+  return alias;
+};
+
+module.exports = () => {
+  return {
+    // config 函数可以返回一个对象，这个对象是部分的viteConfig配置
+    config(config, env) {
+      // config: 目前的配置对象
+      // env: {mode, command, ssrBuild}
+      // mode 为环境（production），command为执行的命令（dev，build）,ssrBuild 跟服务端渲染有关
+      const alias = getResolveAlias("../src");
+      return {
+        resolve: {
+          alias,
+        },
+      };
+    },
+  };
+};
+```
