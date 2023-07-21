@@ -368,7 +368,7 @@ const postcssPresetEnv = require('postcss-preset-env')
 
 在 node 中，除了动态 Api 以外，99%都可以被视作静态资源
 
-vite 对静态资源基本上是开箱即用的，除了一些特殊情况（svg）
+vite 对静态资源基本上是开箱即用的
 
 **img:**
 
@@ -393,6 +393,45 @@ import { name, age } from "./src/assets/json/index.json";
 console.log(name, age); // json读取可以直接读取部分属性哦！而且可以tree-shaking
 ```
 
+**svg**
+
+svg: scalable vector graphics 可伸缩矢量图形
+
+优点：
+
+1. svg 时不会失真的
+2. 尺寸小
+
+缺点：
+
+没法很好的去表示层次丰富的图片信息
+
+**加载 svg 的两种方法**
+
+1. 使用 img 标签加载
+
+```js
+// 把它视作图片来加载，方便，但是不能修改颜色
+import src from "@/assets/svgs/hamburger.svg";
+// 等同于 import src from "@/assets/svgs/hamburger.svg?url";
+const img = document.createElement("img");
+img.src = src;
+document.body.appendChild(img);
+```
+
+2. 读取文件内容（svg 图片是一组 svg 的代码）,放到 html 中
+
+```js
+// 读取最原始的字符串代码
+import src from "@/assets/svgs/hamburger.svg?raw";
+document.body.innerHTML += src;
+const svgElement = document.getElementsByTagName("svg")[0];
+svgElement.onmouseenter = function () {
+  // 通过设置fill来设置 svg 图片的颜色
+  this.style.fill = "red";
+};
+```
+
 ### 配置路径别名
 
 ```js
@@ -406,3 +445,7 @@ console.log(name, age); // json读取可以直接读取部分属性哦！而且�
   },
 }
 ```
+
+**resolve.alias 原理**
+
+在 vite 服务端读取到对应文件时，会根据 alias 配置替换源文件中的对应的字符串，将它替换为可以正常读取的文件路径，本质就是做了一个字符串的 replace 操作
