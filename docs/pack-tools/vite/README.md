@@ -495,9 +495,14 @@ import { ViteAliases } from "vite-aliases";
 
 ### 手写自定义插件
 
-在 plugins 数组里的每一个插件都是一个配置对象，该对象包含一个 `config` 属性，是一个函数，该函数返回的对象最终会和 vite.config.js 产出的对象 merge 为一个最终的配置对象，config 函数的具体信息可以看下面的手写 vite-aliases 插件的注释
+在 plugins 数组里的每一个插件都是一个配置对象，该对象包含多个生命周期钩子，这些钩子会在 vite 生命周期的适当时机被调用，以处理不同时期的产物
 
-在插件中，你可以直接 export 一个带 config 属性的对象，用来覆盖某些配置，也可以导出一个函数用来生成带 config 属性的对象，这样就可以传入一些插件配置
+在插件中，你可以直接 export 一个带生命周期钩子的对象，用来覆盖某些配置，也可以导出一个函数用来生成带生命周期钩子的对象，这样就可以传入一些插件配置
+
+生命周期钩子：
+
+1. config：用来修改配置的钩子，具体信息可以看下面的手写 vite-aliases 插件的注释
+2. transformIndexHtml: 修改模板 html，具体信息可以看下面的手写 CreateHtmlPlugin 插件的注释
 
 ```js
 // 直接导出一个配置对象
@@ -559,4 +564,38 @@ module.exports = () => {
     },
   };
 };
+```
+
+```js
+// CreateHtmlPlugin.js
+module.exports = (options) => {
+  return {
+    // html是原始的html文件内容，ctx为请求的执行上下文 methods,url,header。。。
+    // 这个钩子可能执行时机比较晚，就可能导致其他读取html的插件读到 <%= title %> 然后报错，因此需要将它的执行时机提前
+    // transformIndexHtml(html, ctx) {
+    //   return html.replace(/<%= title %>/g, options.inject.data.title);
+    // },
+    transformIndexHtml: {
+      enforce: "pre",
+      transform(html, ctx) {
+        return html.replace(/<%= title %>/g, options.inject.data.title);
+      },
+    },
+  };
+};
+
+// config.js
+import CreateHtmlPlugin from "./plugins/CreateHtmlPlugin";
+{
+  // ...,
+  plugin: [
+    CreateHtmlPlugin({
+      inject: {
+        data: {
+          title: "home",
+        },
+      },
+    }),
+  ];
+}
 ```
