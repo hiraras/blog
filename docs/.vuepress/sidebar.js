@@ -55,6 +55,10 @@ module.exports = [
             path: "/JavaScript/ecmascript/event-loop/",
           },
           {
+            title: "date 对象",
+            path: "/JavaScript/ecmascript/date/",
+          },
+          {
             title: "web worker",
             path: "/JavaScript/ecmascript/web-worker/",
           },
