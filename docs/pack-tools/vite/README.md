@@ -499,10 +499,19 @@ import { ViteAliases } from "vite-aliases";
 
 在插件中，你可以直接 export 一个带生命周期钩子的对象，用来覆盖某些配置，也可以导出一个函数用来生成带生命周期钩子的对象，这样就可以传入一些插件配置
 
-生命周期钩子：
+vite 是基于 rollup 构建的，使用 rollup 的打包能力来处理项目中的代码，所以 vite 的插件包括兼容 rollup 的插件和 vite 专属的插件
+
+vite 独有的生命周期钩子：
 
 1. config：用来修改配置的钩子，具体信息可以看下面的手写 vite-aliases 插件的注释
 2. transformIndexHtml: 修改模板 html，具体信息可以看下面的手写 CreateHtmlPlugin 插件的注释
+3. configureServer: 可以用来修改 vite-server 的钩子，server 对象会作为参数传给它。钩子将在内部中间件被安装前调用，所以自定义的中间件将会比内部中间件早运行。如果想注入一个在内部中间件之后运行的中间件，可以返回一个函数，可看下面的 VitePluginMock
+4. configResolved: 整个配置文件的解析流程完全完毕以后会走的钩子，参数为最终的配置对象
+5. configurePreviewServer: 与 configureServer 相同，但用于预览服务器
+
+rollup 兼容的钩子：
+
+具体查看 rollup 文档：[https://cn.rollupjs.org/plugin-development/](https://cn.rollupjs.org/plugin-development/)
 
 ```js
 // 直接导出一个配置对象
@@ -597,5 +606,136 @@ import CreateHtmlPlugin from "./plugins/CreateHtmlPlugin";
       },
     }),
   ];
+}
+```
+
+```js
+// VitePluginMock.js
+const path = require("path");
+const fs = require("fs");
+
+const getMockData = (mockPath) => {
+  // 因为不知道用户的目录是怎么样的，所以不能使用__dirname，一般项目运行在根目录，所以直接使用process.cwd()获得根目录
+  const dirPath = path.resolve(process.cwd(), `./${mockPath}`);
+  const mockStat = fs.statSync(dirPath);
+  let mockData = [];
+  if (mockStat.isDirectory()) {
+    const children = fs.readdirSync(dirPath);
+    children.forEach((child) => {
+      const childPath = path.resolve(dirPath, `./${child}`);
+      mockData.push(...(require(childPath) || []));
+    });
+  } else {
+    mockData.push(...(require(dirPath) || []));
+  }
+  return mockData;
+};
+
+export default (options) => {
+  // 做的最主要的事情就是拦截http请求
+  const { mockPath = "mock" } = options || {};
+  return {
+    configureServer(server) {
+      // 添加中间件
+      server.middlewares.use((req, res, next) => {
+        const mockData = getMockData(mockPath);
+        const target = mockData.find(
+          (item) => item.method === req.method && item.url === req.url
+        );
+        if (target) {
+          res.writeHead(200, { "Content-type": "application/json" });
+          res.end(JSON.stringify(target.response({})));
+        } else {
+          next();
+        }
+      });
+    },
+  };
+};
+
+// /mock/index.js
+const mockJS = require("mockjs");
+
+const list = mockJS.mock({
+  "data|100": [
+    {
+      name: "@cname", // 生成中文名
+      ename: mockJS.Random.name(), // 生成英文名
+      time: "@time", // 生成时间
+      date: "@date", // 生成日期
+      avatar: mockJS.Random.image("100x100"),
+    },
+  ],
+});
+
+module.exports = [
+  {
+    method: "POST",
+    url: "/api/users",
+    response: ({ body }) => {
+      // body -> 请求体
+      return {
+        code: 0,
+        msg: "success",
+        ...list,
+      };
+    },
+  },
+];
+```
+
+### vite 和 ts
+
+vite 天生支持 ts，但空项目只会有些提示，约束的力度很小，为了凸显 ts，需要一些配置将其能够影响到开发（直接报错、打包失败等）
+
+这里使用 vite-plugin-checker 进行检查，它依赖于 typescript 所以还需要安装 typescript 包
+
+```js
+import Checker from "vite-plugin-checker";
+
+{
+  plugins: [
+    // ...
+    Checker({ typescript: true }),
+  ];
+}
+```
+
+如果它还检查了 node_modules 包中的 ts，可以配置 tsconfig.json
+
+```json
+{
+  "compilerOptions": {
+    "skipLibCheck": true // 跳过node_modules目录的检查
+  }
+}
+```
+
+关于 import.meta
+
+引入 ts 后，ts 默认会将代码编译为 es3，导致 import 报错，所需要将配置改为 esnext
+
+```json
+{
+  "compilerOptions": {
+    "module": "esnext"
+  }
+}
+```
+
+然后会显示 env 不在 import.meta 上，这时需要在根目录添加 vite 的声明文件 vite-env.d.ts，在里面导入 vite/client，这样 env 就能被找到了
+
+```ts
+// vite-env.d.ts
+/// <reference types="vite/client" />
+```
+
+这时还有一个问题，env 的类型只有一些 vite 提供的环境变量，自定义的环境变量还是没有提示，可以在这个文件中添加一个 interface ImportMetaEnv 来声明，这样就有了
+
+```ts
+// vite-env.d.ts
+/// <reference types="vite/client" />
+interface ImportMetaEnv {
+  BASENAME: string;
 }
 ```
