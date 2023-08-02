@@ -824,3 +824,61 @@ chunk -> 块
 浏览器收到响应结果，发现响应头里有 gzip 对应的字段，直接解压得到原原本本的 js 文件（浏览器要承担一定的解压时间）
 
 所以如果压缩效率比较低的文件就没必要使用
+
+## 动态导入
+
+动态导入和按需加载是异曲同工
+
+使用 import() 语法，vite 用的 es 原生的动态导入语法
+
+## cdn 加速
+
+Content Delivery Network，内容分发网络，是一种用于在全球范围内分发网络内容的服务器，通过将内容（网页、图片、视频等）存储在离用户更近的服务器节点上，以加速用户对这些内容的访问速度，提供更快的加载和更好的用户体验，CDN 可以有效减少服务器的负载，提供网站的可用性和性能
+
+在 vite 中可以使用 vite-plugin-cdn-import 插件，来配置哪些资源使用 cdn，它会在 header 插入一个 script 标签，将配置的 cdn 地址引入，同时修改一些 rollup 的配置，让代码变成全局使用变量的形式
+
+```js
+import viteCDNPlugin from "vite-plugin-cdn-import";
+{
+  plugins: [
+    viteCDNPlugin({
+      modules: [
+        {
+          name: "lodash", // 包名
+          var: "_", // 模块导出的变量名,jQuery就是 $
+          path: "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js", // cdn地址
+        },
+      ],
+    }),
+  ];
+}
+```
+
+在 webpack 中，可以使用 webpack-cdn-plugin 插件
+
+注意：
+
+- 一些包可能无法使用这种方式，需要尝试后决定是否使用 cdn 加速（React、ReactDOM 没试成功，lodash 成功了）
+- 要确保 cdn 的包文件是正确的（地址、版本等）
+
+```js
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+const WebpackCDNPlugin = require("webpack-cdn-plugin");
+
+{
+  plugins: [
+    new HTMLWebpackPlugin({
+      template: "public/index.ejs", // 如果需要指定入口html文件需要加上这个插件，注意顺序
+    }),
+    new WebpackCDNPlugin({
+      modules: [
+        {
+          name: "lodash", // 包名
+          var: "_", // 模块导出的变量名,jQuery就是 $
+          prodUrl: "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js", // cdn地址
+        },
+      ],
+    }),
+  ],
+}
+```
