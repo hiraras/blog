@@ -363,7 +363,52 @@ module.exports = [
       },
       {
         title: "vite",
-        path: "/pack-tools/vite/",
+        children: [
+          {
+            title: "vite 简介",
+            path: "/pack-tools/vite/intro/",
+          },
+          {
+            title: "vite defineConfig",
+            path: "/pack-tools/vite/define-config/",
+          },
+          {
+            title: "vite 环境变量",
+            path: "/pack-tools/vite/env-variable/",
+          },
+          {
+            title: "vite的css相关配置",
+            path: "/pack-tools/vite/css/",
+          },
+          {
+            title: "vite中的静态资源",
+            path: "/pack-tools/vite/static-assets/",
+          },
+          {
+            title: "vite 别名的配置",
+            path: "/pack-tools/vite/alias/",
+          },
+          {
+            title: "vite 插件",
+            path: "/pack-tools/vite/plugins/",
+          },
+          {
+            title: "vite & ts",
+            path: "/pack-tools/vite/ts/",
+          },
+          {
+            title: "vite 性能优化",
+            path: "/pack-tools/vite/optimization/",
+          },
+          {
+            title: "vite 跨域",
+            path: "/pack-tools/vite/cross-domain/",
+          },
+          {
+            title: "vite开发中遇到的问题",
+            path: "/pack-tools/vite/troubles/",
+          },
+        ],
       },
     ],
   },
