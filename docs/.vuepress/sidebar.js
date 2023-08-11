@@ -427,6 +427,10 @@ module.exports = [
     ],
   },
   {
+    title: "web3.0",
+    path: "/web3.0/",
+  },
+  {
     title: "web安全",
     children: [
       {
