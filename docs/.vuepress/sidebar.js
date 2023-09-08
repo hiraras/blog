@@ -549,6 +549,10 @@ module.exports = [
             title: "深拷贝",
             path: "/arithmetic/practice/02/",
           },
+          {
+            title: "并发请求",
+            path: "/arithmetic/practice/03/",
+          },
         ],
       },
     ],
