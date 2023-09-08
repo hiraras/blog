@@ -428,7 +428,16 @@ module.exports = [
   },
   {
     title: "web3.0",
-    path: "/web3.0/",
+    children: [
+      {
+        title: "概念",
+        path: "/web3.0/basic/",
+      },
+      {
+        title: "solidity",
+        path: "/web3.0/solidity/",
+      },
+    ],
   },
   {
     title: "web安全",
