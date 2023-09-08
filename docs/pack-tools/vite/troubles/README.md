@@ -61,6 +61,36 @@ export default defineConfig({
 });
 ```
 
+第二种方法：
+
+使用 `vite-plugin-node-polyfills` 包来补全 node api，感觉比上面的包全
+
+```r
+yarn add vite-plugin-node-polyfills -D
+```
+
+```js
+// defineConfig
+{
+  plugins: [
+    nodePolyfills({
+      // To exclude specific polyfills, add them to this list.
+      exclude: [
+        "fs", // Excludes the polyfill for `fs` and `node:fs`.
+      ],
+      // Whether to polyfill specific globals.
+      globals: {
+        Buffer: true, // can also be 'build', 'dev', or false
+        global: true,
+        process: true,
+      },
+      // Whether to polyfill `node:` protocol imports.
+      protocolImports: true,
+    }),
+  ];
+}
+```
+
 ### Unable to determine current node version，如果直接移除了 react-scripts ，使用 react 插件也可避免这个问题
 
 解决：

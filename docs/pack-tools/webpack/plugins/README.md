@@ -19,3 +19,4 @@ plugin 赋予了 webpack 各种灵活的功能，例如：打包优化、环境�
 - **webpack-bundle-analyzer**：可视化 webpack 输出文件的体积（业务组件、依赖第三方模块）
 - **size-plugin**：监控资源体积变化，尽早发现问题
 - **HotModuleReplacementPlugin**：模块热替换
+- **node-polyfill-webpack-plugin**: 补全一些 node 环境的 api（一些包会用到 node 端的一些 api 例如 Buffer）
