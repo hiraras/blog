@@ -435,7 +435,16 @@ module.exports = [
       },
       {
         title: "solidity",
-        path: "/web3.0/solidity/",
+        children: [
+          {
+            title: "基础",
+            path: "/web3.0/solidity/basic/",
+          },
+          {
+            title: "数据类型",
+            path: "/web3.0/solidity/data-type/",
+          },
+        ],
       },
     ],
   },
