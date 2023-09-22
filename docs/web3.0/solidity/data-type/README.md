@@ -46,7 +46,7 @@ contract Number {
 
 3. address
 
-地址类型表示以太坊地址，长度为 20 字节，地址可以使用.balance 方法获得余额，也可以使用.transfer 方法将余额转到另一个地址
+地址类型表示以太坊地址，长度为 20 字节，地址可以使用 balance 方法获得余额，也可以使用 transfer 方法将余额转到另一个地址
 
 ```solidity
 contract Address {
@@ -61,15 +61,16 @@ contract Address {
 
 5. 枚举
 
+```solidity
 contract Enum {
-// 定一个枚举类型，有点像 ts 中的或的关系
-enum State {
-Online, // 0
-Offline, // 1
-Unknown // 2
-}
-// 默认为第一个值，state 可以取 0 | 1 | 2
-State state;
+    // 定一个枚举类型，有点像 ts 中的或的关系
+    enum State {
+        Online, // 0
+        Offline, // 1
+        Unknown // 2
+    }
+    // 默认为第一个值，state 可以取 0 | 1 | 2
+    State state;
 
     function getState() public view returns(State) {
         return state;
@@ -85,26 +86,12 @@ State state;
     function getOffline() public pure returns(State) {
         return State.Offline;
     }
-
 }
+```
 
 6. 函数
 
-逻辑的封装
-
-- 使用 function 关键字定义
-- 参数名前需要定义参数类型
-- 括号后需要添加可见性标识符
-- 如果有读取到状态变量，则需要使用 view 修饰符；如果没有涉及到任何状态变量，则需要使用 pure 修饰符；如果有修改到状态变量（即便是对象的某个键值）就不需要加
-- 如果有 return 内容，需要使用 returns() 声明，如果 returns 有多个返回，则需要 return 一个元组
-
-```solidity
-
-```
-
-function test() private pure returns(uint, string memory) {
-return (1, "hi");
-}
+详见[solidity 函数](/web3.0/solidity/function/)
 
 ## 引用类型
 
@@ -112,7 +99,6 @@ return (1, "hi");
 
 - 分为定长数组和可变长度的数组
 - 数组长度不可修改
-- 空位自动补 0
 - storage 存储位置的数组可以使用 `uint[5] public arr1 = [2, 3, 4, 5];` 方式声明一个定长数组，无法使用 push 方法
 - storage 存储位置的数组可以使用 `uint[5] public arr2;` 方式声明一个不定长数组，可以 使用 push 方法
 - memory 存储位置的数组无法使用 `uint[] memory a = [1,2,3,5];` 方式声明，可以使用 `uint[] memory a = new uint[](n);` 声明

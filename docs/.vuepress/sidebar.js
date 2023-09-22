@@ -431,7 +431,15 @@ module.exports = [
     children: [
       {
         title: "概念",
-        path: "/web3.0/basic/",
+        path: "/web3.0/concept/",
+      },
+      {
+        title: "问题",
+        path: "/web3.0/questions/",
+      },
+      {
+        title: "web3.js",
+        path: "/web3.0/web3js/",
       },
       {
         title: "solidity",
@@ -443,6 +451,14 @@ module.exports = [
           {
             title: "数据类型",
             path: "/web3.0/solidity/data-type/",
+          },
+          {
+            title: "函数",
+            path: "/web3.0/solidity/function/",
+          },
+          {
+            title: "发行自定义货币",
+            path: "/web3.0/solidity/custom-eth/",
           },
         ],
       },
