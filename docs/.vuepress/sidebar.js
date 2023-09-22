@@ -439,7 +439,16 @@ module.exports = [
       },
       {
         title: "web3.js",
-        path: "/web3.0/web3js/",
+        children: [
+          {
+            title: "一些概念",
+            path: "/web3.0/web3js/concept/",
+          },
+          {
+            title: "api",
+            path: "/web3.0/web3js/api/",
+          },
+        ],
       },
       {
         title: "solidity",

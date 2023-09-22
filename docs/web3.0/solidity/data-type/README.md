@@ -5,11 +5,11 @@
 
 ## 值类型
 
-1. 布尔
+### 布尔
 
 true/false
 
-2. 数字
+### 数字
 
 整形：
 
@@ -44,7 +44,7 @@ contract Number {
 }
 ```
 
-3. address
+### address
 
 地址类型表示以太坊地址，长度为 20 字节，地址可以使用 balance 方法获得余额，也可以使用 transfer 方法将余额转到另一个地址
 
@@ -55,11 +55,11 @@ contract Address {
 }
 ```
 
-4. 定长字节数组
+### 定长字节数组
 
 参考下面的 string 类型
 
-5. 枚举
+### 枚举
 
 ```solidity
 contract Enum {
@@ -89,13 +89,13 @@ contract Enum {
 }
 ```
 
-6. 函数
+### 函数
 
 详见[solidity 函数](/web3.0/solidity/function/)
 
 ## 引用类型
 
-1. 数组
+### 数组
 
 - 分为定长数组和可变长度的数组
 - 数组长度不可修改
@@ -178,7 +178,7 @@ contract Array {
 }
 ```
 
-2. 字符串
+### 字符串
 
 - 中文特殊字符需要用 unicode 编码
 - 需要使用特殊方法获取字符串长度
@@ -212,7 +212,7 @@ contract String {
 }
 ```
 
-3. 结构体
+### 结构体
 
 结构上类似于对象
 
@@ -245,7 +245,7 @@ contract Struct {
 }
 ```
 
-4. mapping
+### mapping
 
 ```solidity
 mapping(_KeyType => _ValueType)
