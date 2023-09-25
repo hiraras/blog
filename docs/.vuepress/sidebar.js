@@ -448,6 +448,14 @@ module.exports = [
             title: "api",
             path: "/web3.0/web3js/api/",
           },
+          {
+            title: "wallet-api",
+            path: "/web3.0/web3js/wallet-api/",
+          },
+          {
+            title: "问题",
+            path: "/web3.0/web3js/questions/",
+          },
         ],
       },
       {
