@@ -728,6 +728,10 @@ module.exports = [
         path: "/practice/LazyImage/",
       },
       {
+        title: "瀑布流布局",
+        path: "/practice/masonry-layout/",
+      },
+      {
         title: "utils函数",
         children: [
           {
