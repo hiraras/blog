@@ -548,6 +548,15 @@ module.exports = [
         title: "使用 github-actions 自动部署",
         path: "/deploy/github-actions/",
       },
+      {
+        title: "docker",
+        children: [
+          {
+            title: "概念",
+            path: "/deploy/docker/concept/",
+          },
+        ],
+      },
     ],
   },
   {
@@ -690,7 +699,7 @@ module.exports = [
         children: [
           {
             title: "chrome使用技巧",
-            path: "tools/chrome/use/",
+            path: "/tools/chrome/use/",
           },
         ],
       },
