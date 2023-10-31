@@ -103,6 +103,10 @@ module.exports = [
             title: "录屏",
             path: "/JavaScript/clientAPI/record-screen/",
           },
+          {
+            title: "composition",
+            path: "/JavaScript/clientAPI/composition/",
+          },
         ],
       },
       {
@@ -221,6 +225,12 @@ module.exports = [
   },
   {
     title: "移动端",
+    children: [
+      {
+        title: "app与webview交互",
+        path: "/app/webview/",
+      },
+    ],
   },
   {
     title: "小程序",
