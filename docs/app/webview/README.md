@@ -4,28 +4,56 @@
 
 ### jsBridge
 
+#### 调用及注册事件的辅助方法
+
+```ts
+export function setupBridge(callback: (...rest: any[]) => void) {
+  // 这里视为android和ios互相独立
+  if (window.WebViewJavascriptBridge) {
+    // android的bridge
+    return callback(window.WebViewJavascriptBridge);
+  }
+  if (window.WKWebViewJavascriptBridge) {
+    // ios的bridge
+    return callback(window.WKWebViewJavascriptBridge);
+  }
+  if (window.WKWVJBCallbacks) {
+    // ios没有WKWebViewJavascriptBridge时的备用方法
+    window.WKWVJBCallbacks.push(callback);
+    return;
+  }
+  window.WKWVJBCallbacks = [callback];
+  window.webkit?.messageHandlers?.iOS_Native_InjectJavascript?.postMessage?.(
+    null
+  );
+
+  // android没有WebViewJavascriptBridge使的备用方法
+  document.addEventListener(
+    "WebViewJavascriptBridgeReady",
+    function () {
+      callback(window.WebViewJavascriptBridge);
+    },
+    false
+  );
+}
+```
+
 #### 调用 app 方法
 
 ```js
-window.WebViewJavascriptBridge?.callHandler(
-  "getEnvInfo", // 函数名
-  null, // 参数
-  function (response: any) {
-    // 回调
-    saveEnvInfo(getJsonData(response));
-  }
-);
+setupBridge(function (bridge) {
+  bridge?.callHandler("getEnvInfo", null, function (response: any) {
+    console.log(getJsonData(response));
+  });
+});
 ```
 
 #### 注册方法供 app 调用
 
 ```js
-window.WebViewJavascriptBridge?.init(); // 需要初始化才能注册
-window.WebViewJavascriptBridge?.registerHandler(
-  "changeTheme", // 方法名
-  function (theme: Theme) {
-    // 回调
-    update({ theme });
-  }
-);
+bridge?.init?.(); // 需要初始化才能注册
+bridge?.registerHandler("changeTheme", function (theme: Theme) {
+  // 回调
+  update({ theme });
+});
 ```
