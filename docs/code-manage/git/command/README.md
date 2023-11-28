@@ -53,3 +53,21 @@ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Crese
 **git config --get core.autocrlf**
 
 **git remote remove origin**: 删除 origin
+
+**git tag**：显示出所有本地标签
+
+**git ls-remote --tags origin**：显示出名为 origin 的远程存储库中的所有标签
+
+**git tag [tagName]**：创建轻量级 tag
+
+**git tag [tagName] -m"message"**：创建一个带有注释消息的 tag
+
+**git show [tagName]**：查看标签信息
+
+**git push origin [tagName]**：将 tag 推送到远程
+
+**git push --delete origin [tagName]**：删除远程 tag
+
+**git checkout [tagName]**：检出 tag，这将使存储库进入游离 HEAD 状态，此时可以再用 `git checkout -b [branchName]` 切出新分支
+
+**git checkout -b [branchName] [tagName]**：创建一个分支，并将其设置为 tag 所指向的提交
