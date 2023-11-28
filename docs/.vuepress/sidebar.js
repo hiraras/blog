@@ -234,6 +234,12 @@ module.exports = [
   },
   {
     title: "小程序",
+    children: [
+      {
+        title: "taro",
+        path: "/applets/taro/",
+      },
+    ],
   },
   {
     title: "前端框架",
