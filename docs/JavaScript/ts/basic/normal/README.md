@@ -42,3 +42,30 @@ interface Window {
   "include": ["global.d.ts"]
 }
 ```
+
+## never 类型
+
+never 类型表示不可能的类型，因此可以用来做一些类型限制(或者说剔除)
+
+### 应用
+
+1. 定义一个不是 Date，但可以为其他任何类型的类型
+
+```ts
+type BanDate<T> = T extends Date ? never : T;
+
+function log<T>(data: BanDate<T>) {}
+log(1);
+log(new Date()); // Argument of type 'Date' is not assignable to parameter of type 'never'.
+log("abd");
+```
+
+```ts
+// 更加泛用的例子
+type BanDate<T, K> = T extends K ? never : T;
+
+function log<T>(data: BanDate<T, Date>) {}
+log(1);
+log(new Date()); // Argument of type 'Date' is not assignable to parameter of type 'never'.
+log("abd");
+```
