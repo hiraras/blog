@@ -757,6 +757,10 @@ module.exports = [
         path: "/practice/masonry-layout/",
       },
       {
+        title: "浏览器指纹",
+        path: "/practice/browser-fingerprint/",
+      },
+      {
         title: "utils函数",
         children: [
           {
