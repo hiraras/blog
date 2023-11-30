@@ -65,7 +65,7 @@ module.exports = [
         ],
       },
       {
-        title: "浏览器API",
+        title: "浏览器API & 特性",
         children: [
           {
             title: "IndexedDB",
@@ -106,6 +106,14 @@ module.exports = [
           {
             title: "composition",
             path: "/JavaScript/clientAPI/composition/",
+          },
+          {
+            title: "浏览器渲染原理",
+            path: "/JavaScript/clientAPI/render-principle/",
+          },
+          {
+            title: "js操作css",
+            path: "/JavaScript/clientAPI/js-change-css/",
           },
         ],
       },
