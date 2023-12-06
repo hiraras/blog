@@ -9,6 +9,10 @@
 
 例如：Markdown PDF 使用 `ctrl + shift + v` 预览 pdf
 
+### lorem 乱数假文
+
+在编辑器中输入 `div*30>lorem3`，可生成 30 个 div，里面包含随机字符串的文本，最后的 3 表示每个容器中生成的单词数量
+
 ### 工具
 
 **auto rename tag**：自动重命名成对的 HTML 标记，修改开始标签，结束标签会同步修改
