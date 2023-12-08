@@ -59,6 +59,10 @@ module.exports = [
             path: "/JavaScript/ecmascript/date/",
           },
           {
+            title: "属性描述符",
+            path: "/JavaScript/ecmascript/property-descriptor/",
+          },
+          {
             title: "web worker",
             path: "/JavaScript/ecmascript/web-worker/",
           },
