@@ -208,6 +208,10 @@ module.exports = [
         path: "/css/module/",
       },
       {
+        title: "动画",
+        path: "/css/animate/",
+      },
+      {
         title: "实践",
         children: [
           {

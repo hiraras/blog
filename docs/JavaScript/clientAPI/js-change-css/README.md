@@ -26,3 +26,13 @@ const { styleSheets } = document;
 // 相当于在一个style/link中添加了 div{ color: red !important } 的代码
 styleSheets[0].addRule("div", "color: red !important");
 ```
+
+## 页面强制重渲染
+
+1. 读取页面元素的几何信息
+
+```js
+dom.clientWidth;
+```
+
+2. requestAnimationFrame
