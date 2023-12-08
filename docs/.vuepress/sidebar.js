@@ -261,6 +261,10 @@ module.exports = [
     title: "前端框架",
     children: [
       {
+        title: "心得",
+        path: "/frontend-frame/mind/",
+      },
+      {
         title: "React",
         children: [
           {
@@ -312,6 +316,20 @@ module.exports = [
               {
                 title: "为children注入父组件的props",
                 path: "/frontend-frame/react/real-question/01/",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Vue",
+        children: [
+          {
+            title: "实践",
+            children: [
+              {
+                title: "mini-vue",
+                path: "/frontend-frame/vue/practice/mini-vue/",
               },
             ],
           },
