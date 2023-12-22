@@ -813,7 +813,7 @@ module.exports = [
       },
       {
         title: "临时",
-        path: "/practice/temp",
+        path: "/practice/temp/",
       },
       {
         title: "歌词滚动效果",
