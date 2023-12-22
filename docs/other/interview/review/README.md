@@ -8,3 +8,10 @@
 - ts
 
 相关链接：https://juejin.cn/post/6844903885488783374
+
+meet48:
+
+1. 使用 webpack-bundle-analyzer 分析打包产物构成，从而分析造成包过大的原因
+2. 为国际化 json 文件每次打包时添加文件指纹，解决时常发生的缓存问题
+3. 为页面做懒加载将 main.js 文件大小从 1.1m 降低到 600k
+4. 使用 splitChunk 将 npm 包的代码拆分到单独的 js 文件中

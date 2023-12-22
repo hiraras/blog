@@ -331,6 +331,10 @@ module.exports = [
                 title: "mini-vue",
                 path: "/frontend-frame/vue/practice/mini-vue/",
               },
+              {
+                title: "custom-ref",
+                path: "/frontend-frame/vue/practice/custom-ref/",
+              },
             ],
           },
         ],
