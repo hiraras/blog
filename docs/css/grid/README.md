@@ -16,7 +16,9 @@
 - repeat: repeat(3, 20px) === 20px 20px 20px;
 - auto-fill: 当不知道容器大小的时候，不知道填写多少数量时可以使用，会自动填充满;
 - repeat(auto-fill, 100px): 以 100px 的间隔填充网格
-- minmax(minvalue, maxvalue): 表示长度在这范围之内，当和 auto-fill 一起使用时，auto-fill 会取尽可能大，即长度会尽可能小
+- minmax(minvalue, maxvalue): 表示长度在这范围之内，当和 auto-fill 一起使用时，auto-fill 会取尽可能大，即在满足 minmax 值的情况下，尽量多分几列；
+
+minmax(300px, 400px) 这样设置的时候会取 400px 为元素宽度，所以直接设置两个具体的值没啥意义，通常结合 fr 使用
 
 2. grid-template-areas: 可以为每个格子命名，这样使用:
 

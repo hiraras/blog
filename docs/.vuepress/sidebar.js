@@ -66,6 +66,10 @@ module.exports = [
             title: "web worker",
             path: "/JavaScript/ecmascript/web-worker/",
           },
+          {
+            title: "注释",
+            path: "/JavaScript/ecmascript/comment/",
+          },
         ],
       },
       {
