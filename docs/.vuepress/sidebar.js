@@ -123,6 +123,10 @@ module.exports = [
             title: "js操作css",
             path: "/JavaScript/clientAPI/js-change-css/",
           },
+          {
+            title: "拖拽",
+            path: "/JavaScript/clientAPI/drag/",
+          },
         ],
       },
       {
