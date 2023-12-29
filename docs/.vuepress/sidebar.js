@@ -827,6 +827,10 @@ module.exports = [
         title: "歌词滚动效果",
         path: "/practice/lyric-roll/",
       },
+      {
+        title: "cli工具",
+        path: "/practice/setup-cli/",
+      },
     ],
   },
   {
