@@ -484,6 +484,10 @@ module.exports = [
             title: "终止http请求",
             path: "/request/common/abort-request/",
           },
+          {
+            title: "请求进度控制",
+            path: "/request/common/progress-control/",
+          },
         ],
       },
     ],
