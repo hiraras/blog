@@ -245,6 +245,15 @@ module.exports = [
         title: "回流和重绘",
         path: "/html/reflow-repaint/",
       },
+      {
+        title: "html标签",
+        children: [
+          {
+            title: "dialog",
+            path: "/html/tags/dialog/",
+          },
+        ],
+      },
     ],
   },
   {
