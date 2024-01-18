@@ -848,6 +848,10 @@ module.exports = [
         title: "cli工具",
         path: "/practice/setup-cli/",
       },
+      {
+        title: "promise 相关",
+        path: "/practice/promise/",
+      },
     ],
   },
   {
