@@ -316,6 +316,10 @@ module.exports = [
                 title: "useImperativeHandle",
                 path: "/frontend-frame/react/hooks/useImperativeHandle/",
               },
+              {
+                title: "useDragScroll",
+                path: "/frontend-frame/react/hooks/useDragScroll/",
+              },
             ],
           },
           {
