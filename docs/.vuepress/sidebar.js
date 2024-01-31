@@ -592,6 +592,10 @@ module.exports = [
         title: "访问资源获取优化",
         path: "/optimize/get-resource/",
       },
+      {
+        title: "通用的打包体积优化",
+        path: "/optimize/common-package-size/",
+      },
     ],
   },
   {
