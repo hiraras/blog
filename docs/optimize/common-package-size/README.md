@@ -22,3 +22,39 @@
 ```
 
 通过上述例子就能用来针对 babel 进行优化
+
+## 将一些大包通过 cdn 的方式引入(其实也不仅限于 cdn，如果自己有更快的引入地址，也可以使用自己的/内网环境也适用)
+
+优点：
+
+1. 通过 cdn 方式引入的包被缓存后，后续即便更新了 main.js，这部分内容还是被缓存的状态，提升了更新项目时的效率
+2. cdn 经过网络的优化，获取资源的速度更快
+3. 多个项目可以共同引用一个地址
+
+实现：
+
+1. 通过 webpack-bundle-analyzer 分析哪些包是可以抽离的
+2. 获取包的 cdn 链接地址
+3. 在模板 html 中引入
+4. 如果是 webpack 项目，需要配置 externals ，将项目中的 import 语法转化为全局变量的代码；这一步还需要知道 cdn 方式引入的话全局变量的名称
+
+示例：
+
+```html
+<!-- 添加在head标签里边的最后边 -->
+<script
+  crossorigin
+  src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"
+></script>
+<script
+  crossorigin
+  src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"
+></script>
+```
+
+```js
+webpackConfig.externals = {
+  react: "React",
+  "react-dom": "ReactDOM",
+};
+```
