@@ -69,3 +69,47 @@ log(1);
 log(new Date()); // Argument of type 'Date' is not assignable to parameter of type 'never'.
 log("abd");
 ```
+
+## 循环对象的所有键
+
+```ts
+interface ComplexObject {
+  option1: string;
+  option2: number;
+  option3?: boolean;
+}
+
+type CopyObject<T> = {
+  [P in keyof T]: T[P];
+};
+
+let copy: CopyObject<ComplexObject> = {
+  option1: "x",
+  option2: 12,
+};
+```
+
+## 去除对象的所有键
+
+```ts
+interface ComplexObject {
+  option1: string;
+  option2: number;
+  option3?: boolean;
+}
+
+type NonKeyObj<T> = {
+  [P in keyof T as never]: T[P];
+};
+
+let copy: NonKeyObj<ComplexObject> = {
+  option1: `1`, // 虽然不会报错（可能是环境配置问题），但是写键的时候也不会提示
+};
+```
+
+## 用 extends 判断类型
+
+```ts
+type F = string extends string ? true : false;
+type F2 = string extends number ? true : false;
+```
