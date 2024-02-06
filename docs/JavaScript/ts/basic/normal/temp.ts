@@ -1,14 +1,15 @@
 type A = {
-  a?: number;
-  b: string;
+  a: string;
+  b?: number;
+  c: string;
 };
 
-type B = Required<A>;
-
-const a: B = {
-  b: "2",
-  a: 1,
+type Optional<T> = {
+  [K in keyof T as T[K] extends Required<T>[K] ? never : K]: T[K];
 };
 
-type F = string extends string ? true : false;
-type F2 = string extends number ? true : false;
+type B = Optional<A>;
+
+let b: B = {};
+
+type F = { a: string } extends { a: string; b?: number } ? true : false;
