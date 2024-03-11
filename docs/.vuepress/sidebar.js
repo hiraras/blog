@@ -488,20 +488,24 @@ module.exports = [
     ],
   },
   {
-    title: "请求",
+    title: "http",
     children: [
       {
-        title: "通用",
+        title: "请求相关",
         children: [
           {
             title: "终止http请求",
-            path: "/request/common/abort-request/",
+            path: "/http/request/abort-request/",
           },
           {
             title: "请求进度控制",
-            path: "/request/common/progress-control/",
+            path: "/http/request/progress-control/",
           },
         ],
+      },
+      {
+        title: "http基本知识",
+        path: "/http/base/",
       },
     ],
   },
