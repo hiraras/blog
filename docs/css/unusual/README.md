@@ -153,3 +153,12 @@ background-clip: padding-box, border-box;
 background-origin: padding-box, border-box;
 background-image: linear-gradient(to right, #222, #222), linear-gradient(90deg, #8f41e9, #578aef);
 ```
+
+## 几个通用的 css 属性值
+
+- initial
+  设置 css 属性为默认值（默认值是指该属性在 w3c 标准的默认值）
+- unset
+  设置 css 属性为 inherit 或 initial（能继承的属性采用继承，不能继承的采用默认值）
+- revert
+  重置 css 属性为浏览器的默认样式（用户代理的样式）

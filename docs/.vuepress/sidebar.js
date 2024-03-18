@@ -338,7 +338,15 @@ module.exports = [
                 title: "为children注入父组件的props",
                 path: "/frontend-frame/react/real-question/01/",
               },
+              {
+                title: "如何使用react-router控制页面权限",
+                path: "/frontend-frame/react/real-question/02/",
+              },
             ],
+          },
+          {
+            title: "路由",
+            path: "/frontend-frame/react/router",
           },
         ],
       },
