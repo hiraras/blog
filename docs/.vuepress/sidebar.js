@@ -70,6 +70,10 @@ module.exports = [
             title: "注释",
             path: "/JavaScript/ecmascript/comment/",
           },
+          {
+            title: "计时器",
+            path: "/JavaScript/ecmascript/timer/",
+          },
         ],
       },
       {
