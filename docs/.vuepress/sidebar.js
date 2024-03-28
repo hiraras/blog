@@ -346,6 +346,10 @@ module.exports = [
                 title: "如何使用react-router控制页面权限",
                 path: "/frontend-frame/react/real-question/02/",
               },
+              {
+                title: "React事件与普通的HTML事件的区别",
+                path: "/frontend-frame/react/real-question/03/",
+              },
             ],
           },
           {
