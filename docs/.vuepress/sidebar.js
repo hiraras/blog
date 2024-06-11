@@ -260,6 +260,10 @@ module.exports = [
             title: "dialog",
             path: "/html/tags/dialog/",
           },
+          {
+            title: "video",
+            path: "/html/tags/video/",
+          },
         ],
       },
     ],
@@ -385,6 +389,10 @@ module.exports = [
   {
     title: "打包工具",
     children: [
+      {
+        title: "browserify",
+        path: "/pack-tools/browserify/",
+      },
       {
         title: "webpack",
         children: [
