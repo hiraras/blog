@@ -131,6 +131,10 @@ module.exports = [
             title: "拖拽",
             path: "/JavaScript/clientAPI/drag/",
           },
+          {
+            title: "Intersection Observer",
+            path: "/JavaScript/clientAPI/intersection-observer/",
+          },
         ],
       },
       {
