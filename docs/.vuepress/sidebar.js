@@ -648,6 +648,10 @@ module.exports = [
             title: "使用 husky 和 commitlint 规范git提交",
             path: "/code-manage/git/husky-commitlint/",
           },
+          {
+            title: "git push超时",
+            path: "/code-manage/git/host/",
+          },
         ],
       },
       {
