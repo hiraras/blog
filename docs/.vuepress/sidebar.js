@@ -765,6 +765,10 @@ module.exports = [
           },
         ],
       },
+      {
+        title: "分享",
+        path: "/experience/share/",
+      },
     ],
   },
   {
