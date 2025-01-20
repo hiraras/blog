@@ -769,6 +769,10 @@ module.exports = [
         title: "分享",
         path: "/experience/share/",
       },
+      {
+        title: "弹窗",
+        path: "/experience/modals/",
+      },
     ],
   },
   {
