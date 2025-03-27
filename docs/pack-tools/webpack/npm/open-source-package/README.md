@@ -31,3 +31,9 @@
 **highlight.js**： 代码着色，可以分析（也可以指定）文本的语言类型，并为关键字添加样式
 
 **swiper**: 轮播图
+
+**react-masonry-css**: 轻量的实现 react 瀑布流的库
+
+**aliyun-aliplayer**：阿里云直播插件
+
+**@yxim/nim-web-sdk**: 网易云信提供的即时通讯 Web SDK，支持单聊、群聊、会话管理；提供聊天室功能，支持多人实时交流，适用于直播、在线讨论等场景
