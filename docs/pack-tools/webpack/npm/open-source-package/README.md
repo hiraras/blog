@@ -18,7 +18,7 @@
 
 **qs**：复杂请求时会有 option 请求，使用 qs 对 post 请求的参数进行转换就能使它变成非复杂请求可以跳过 option
 
-**react-hooks-global-state**： 类似 useAgent(待研究)
+**react-hooks-global-state**： 类似 useAgent，源码是配合 zustand 库，根据初始对象创建一个公共对象，提供的 api 例如 useGlobalState 就是调用 zustand 的更新方法从而触发全部更新
 
 **react-ace**：带行号的文本编辑组件
 

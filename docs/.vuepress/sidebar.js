@@ -135,6 +135,10 @@ module.exports = [
             title: "Intersection Observer",
             path: "/JavaScript/clientAPI/intersection-observer/",
           },
+          {
+            title: "资源提示符",
+            path: "/JavaScript/clientAPI/resource-prompt/",
+          },
         ],
       },
       {
