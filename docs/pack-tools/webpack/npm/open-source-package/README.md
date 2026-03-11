@@ -37,3 +37,5 @@
 **aliyun-aliplayer**：阿里云直播插件
 
 **@yxim/nim-web-sdk**: 网易云信提供的即时通讯 Web SDK，支持单聊、群聊、会话管理；提供聊天室功能，支持多人实时交流，适用于直播、在线讨论等场景
+
+**React-Responsive**：用于在组件中响应式地适配不同屏幕尺寸和设备环境（如 PC、平板、手机）。它基于 JavaScript 的媒体查询（Media Queries），但提供了更符合 React 开发模式的 API，使开发者可以声明式地处理响应式布局。
