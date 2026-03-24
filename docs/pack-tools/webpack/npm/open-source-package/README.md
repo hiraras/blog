@@ -18,7 +18,7 @@
 
 **qs**：复杂请求时会有 option 请求，使用 qs 对 post 请求的参数进行转换就能使它变成非复杂请求可以跳过 option
 
-**react-hooks-global-state**： 类似 useAgent(待研究)
+**react-hooks-global-state**： 类似 useAgent，源码是配合 zustand 库，根据初始对象创建一个公共对象，提供的 api 例如 useGlobalState 就是调用 zustand 的更新方法从而触发全部更新
 
 **react-ace**：带行号的文本编辑组件
 
@@ -31,3 +31,11 @@
 **highlight.js**： 代码着色，可以分析（也可以指定）文本的语言类型，并为关键字添加样式
 
 **swiper**: 轮播图
+
+**react-masonry-css**: 轻量的实现 react 瀑布流的库
+
+**aliyun-aliplayer**：阿里云直播插件
+
+**@yxim/nim-web-sdk**: 网易云信提供的即时通讯 Web SDK，支持单聊、群聊、会话管理；提供聊天室功能，支持多人实时交流，适用于直播、在线讨论等场景
+
+**React-Responsive**：用于在组件中响应式地适配不同屏幕尺寸和设备环境（如 PC、平板、手机）。它基于 JavaScript 的媒体查询（Media Queries），但提供了更符合 React 开发模式的 API，使开发者可以声明式地处理响应式布局。
