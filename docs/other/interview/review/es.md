@@ -976,3 +976,74 @@ Promise.reject
 Promise.try
 
 当不想区分函数 f 时同步还是异步函数，就可以使用 `Promise.try` 包裹，然后统一当作 Promise 来处理它
+
+# Iterator 和 for...of
+
+遍历器(Iterator)，它是一种接口，为各种不同的数据结构提供统一的访问机制。
+
+```js
+Number.prototype[Symbol.iterator] = function* () {
+    yield 1;
+    yield 2;
+};
+for (let i of 1) {
+    console.log(i); // 输出 1 2
+}
+```
+
+## Iterator 的遍历过程
+
+1. 创建一个`指针对象`，指向当前数据结构的起始位置。也就是说，遍历器对象本质上，就是一个指针对象。
+2. 第一次调用指针对象的 next 方法，可以将指针指向数据结构的第一个成员。
+3. 第二次调用指针对象的 next 方法，指针就指向数据结构的第二个成员。
+4. 不断调用指针对象的 next 方法，直到它指向数据结构的结束位置。
+
+## 默认调用 Iterator 接口的集合
+
+1. 解构赋值
+2. 扩展运算符
+3. yield\*
+4. 由于数组的遍历会调用遍历器接口，所以任何接受数组作为参数的场合，其实都调用了遍历器接口
+
+-   for...of
+-   Array.from()
+-   Map(), Set(), WeakMap(), WeakSet()（比如 new Map([['a',1],['b',2]])）
+-   Promise.all()
+-   Promise.race()
+
+## 遍历器对象的工具方法
+
+```js
+const arr = ["a", "", "b", "", "c", "", "d", "", "e"];
+
+arr.values() // creates an iterator
+    .filter((x) => x.length > 0)
+    .drop(1)
+    .take(3)
+    .map((x) => `=${x}=`)
+    .toArray();
+// ['=b=', '=c=', '=d=']
+```
+
+上面示例中，arr 是一个数组，它的 values() 方法返回的是一个遍历器对象，以前要使用 for...of 循环来处理，现在有了工具方法，就可以直接链式处理了。
+
+-   返回遍历器对象的方法
+    iterator.filter(filterFn)
+    iterator.map(mapFn)
+    iterator.flatMap(mapFn)
+
+-   返回布尔值的方法
+    iterator.some(fn)
+    iterator.every(fn)
+
+-   返回其他值的方法
+    iterator.find(fn)
+    iterator.reduce(reducer, initialValue?)
+
+-   不返回值的方法
+    iterator.forEach(fn)
+
+-   以下是遍历器对象独有的方法。
+    iterator.drop(limit)：返回一个遍历器对象，丢弃前 limit 个成员。
+    iterator.take(limit)：返回一个遍历器对象，包含前 limit 个成员。
+    iterator.toArray()：返回一个数组，包含所有成员。
