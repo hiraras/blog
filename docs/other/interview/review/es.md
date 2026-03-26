@@ -758,3 +758,221 @@ has: 判断是否有指定键
 delete: 删除指定键值
 
 不可被遍历，因为成员是弱引用，随时可能消失，可能遍历过程中有成员不在了
+
+# Proxy
+
+Proxy 用于修改某些操作的默认行为，等同于在语言层面做出修改，所以属于一种“元编程”（meta programming），即对编程语言进行编程。
+
+```js
+// 基本使用
+var proxy = new Proxy(target, handler);
+```
+
+Proxy 支持的拦截操作一览，一共 13 种。
+
+-   get(target, propKey, receiver)：拦截对象属性的读取，比如 proxy.foo 和 proxy['foo']。
+-   set(target, propKey, value, receiver)：拦截对象属性的设置，比如 proxy.foo = v 或 proxy['foo'] = v，返回一个布尔值。
+-   has(target, propKey)：拦截 propKey in proxy 的操作，返回一个布尔值。
+-   deleteProperty(target, propKey)：拦截 delete proxy[propKey]的操作，返回一个布尔值。
+-   ownKeys(target)：拦截 Object.getOwnPropertyNames(proxy)、Object.getOwnPropertySymbols(proxy)、Object.keys(proxy)、for...in 循环，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而 Object.keys()的返回结果仅包括目标对象自身的可遍历属性。
+-   getOwnPropertyDescriptor(target, propKey)：拦截 Object.getOwnPropertyDescriptor(proxy, propKey)，返回属性的描述对象。
+-   defineProperty(target, propKey, propDesc)：拦截 Object.defineProperty(proxy, propKey, propDesc）、Object.defineProperties(proxy, propDescs)，返回一个布尔值。
+-   preventExtensions(target)：拦截 Object.preventExtensions(proxy)，返回一个布尔值。
+-   getPrototypeOf(target)：拦截 Object.getPrototypeOf(proxy)，返回一个对象。
+-   isExtensible(target)：拦截 Object.isExtensible(proxy)，返回一个布尔值。
+-   setPrototypeOf(target, proto)：拦截 Object.setPrototypeOf(proxy, proto)，返回一个布尔值。如果目标对象是函数，那么还有两种额外操作可以拦截。
+-   apply(target, object, args)：拦截 Proxy 实例作为函数调用的操作，比如 proxy(...args)、proxy.call(object, ...args)、proxy.apply(...)。
+-   construct(target, args)：拦截 Proxy 实例作为构造函数调用的操作，比如 new proxy(...args)。
+
+Proxy.revocable
+
+返回一个可取消的 Proxy 实例
+
+```js
+let target = {};
+let handler = {};
+
+let { proxy, revoke } = Proxy.revocable(target, handler);
+
+proxy.foo = 123;
+proxy.foo; // 123
+
+revoke();
+proxy.foo; // TypeError: Revoked
+```
+
+Proxy.revocable()的一个使用场景是，目标对象不允许直接访问，必须通过代理访问，一旦访问结束，就收回代理权，不允许再次访问。
+
+# Reflect
+
+设计目的:
+
+1. 将 Object 对象的一些明显属于语言内部的方法（比如 Object.defineProperty），放到 Reflect 对象上。现阶段，某些方法同时在 Object 和 Reflect 对象上部署，未来的新方法将只部署在 Reflect 对象上。也就是说，从 Reflect 对象上可以拿到语言内部的方法
+2. 修改某些 Object 方法的返回结果，让其变得更合理。比如，Object.defineProperty(obj, name, desc)在无法定义属性时，会抛出一个错误，而 Reflect.defineProperty(obj, name, desc)则会返回 false
+3. 让 Object 操作都变成函数行为。某些 Object 操作是命令式，比如 name in obj 和 delete obj[name]，而 Reflect.has(obj, name)和 Reflect.deleteProperty(obj, name)让它们变成了函数行为。
+4. Reflect 对象的方法与 Proxy 对象的方法一一对应，只要是 Proxy 对象的方法，就能在 Reflect 对象上找到对应的方法。这就让 Proxy 对象可以方便地调用对应的 Reflect 方法，完成默认行为，作为修改行为的基础。也就是说，不管 Proxy 怎么修改默认行为，你总可以在 Reflect 上获取默认行为。
+
+静态方法
+
+-   Reflect.apply(target, thisArg, args)
+-   Reflect.construct(target, args)
+-   Reflect.get(target, name, receiver)
+-   Reflect.set(target, name, value, receiver)
+-   Reflect.defineProperty(target, name, desc)
+-   Reflect.deleteProperty(target, name)
+-   Reflect.has(target, name)
+-   Reflect.ownKeys(target)
+-   Reflect.isExtensible(target)
+-   Reflect.preventExtensions(target)
+-   Reflect.getOwnPropertyDescriptor(target, name)
+-   Reflect.getPrototypeOf(target)
+-   Reflect.setPrototypeOf(target, prototype)
+
+# Promise
+
+1. 对象的状态不受外界影响。Promise 对象代表一个异步操作，有三种状态：pending（进行中）、fulfilled（已成功）和 rejected（已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。这也是 Promise 这个名字的由来，它的英语意思就是“承诺”，表示其他手段无法改变。
+2. 一旦状态改变，就不会再变，任何时候都可以得到这个结果。Promise 对象的状态改变，只有两种可能：从 pending 变为 fulfilled 和从 pending 变为 rejected。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果，这时就称为 resolved（已定型）。如果改变已经发生了，你再对 Promise 对象添加回调函数，也会立即得到这个结果。这与事件（Event）完全不同，事件的特点是，如果你错过了它，再去监听，是得不到结果的。
+
+## 应用
+
+```js
+// 基本使用
+const promise = new Promise(function(resolve, reject) {
+  if (/* 异步操作成功 */){
+    resolve(value);
+  } else {
+    reject(error);
+  }
+});
+// promise状态修改后的两个回调
+promise.then(function(value) {
+  // success
+}, function(error) {
+  // failure
+});
+// promise的传递性
+const p1 = new Promise(function (resolve, reject) {
+    setTimeout(resolve, 5000)
+});
+const p2 = new Promise(function (resolve, reject) {
+    resolve(p1);
+})
+console.log(p2) // pending
+setTimeout(() => {
+    console.log(p2) // fulfilled
+}, 5100)
+// 参数传递
+Promise.resolve(222).then((data) => {
+    console.log('then 1', data) // then 1 222
+    return 111
+}).then((data) => {
+    console.log('then 2', data) // then 2 111
+}).catch((e) => {
+    console.log(e, e.message)
+})
+```
+
+-   实例方法
+
+then: 它会对之前的 promise 对象的状态变化回调不同方法，如果是跟在 `.then` 之后的 `.then` 方法，会将前面的 then 方法的 return 值，使用 Promise.resolve 进行转化
+
+finally: 不管 promise 状态时 fulfilled 还是 rejected 都会执行，它的返回值类似 then 的 return
+
+-   静态方法
+
+Promise.all
+
+```js
+// 只有所有promise都变成fulfilled，Promise.all才会fulfilled，只要有任意一个rejected，Promise.all就会rejected
+const promises = [2, 3, 5, 7, 11, 13].map(function (id) {
+    return getJSON("/post/" + id + ".json");
+});
+Promise.all(promises)
+    .then(function (posts) {
+        // ...
+    })
+    .catch(function (reason) {
+        // ...
+    });
+```
+
+Promise.race
+
+```js
+// 只要有一个promise状态率先发生改变，它就会跟着变
+// 只要fetch在5s内没有fulfilled就变为rejected
+const p = Promise.race([
+    fetch("/resource-that-may-take-a-while"),
+    new Promise(function (resolve, reject) {
+        setTimeout(() => reject(new Error("request timeout")), 5000);
+    }),
+]);
+p.then(console.log).catch(console.error);
+```
+
+Promise.allSettled
+
+```js
+// 每个promise都发生状态改变(不管是fulfilled还是rejected)，就会fulfilled
+const resolved = Promise.resolve(42);
+const rejected = Promise.reject(-1);
+
+const allSettledPromise = Promise.allSettled([resolved, rejected]);
+
+allSettledPromise.then(function (results) {
+    console.log(results);
+});
+// [
+//    { status: 'fulfilled', value: 42 },
+//    { status: 'rejected', reason: -1 }
+// ]
+```
+
+Promise.any
+
+```js
+// 任意一个promise状态变为fulfilled它就会fulfilled，所有promise都rejected它就会rejected
+Promise.any([
+    fetch("https://v8.dev/").then(() => "home"),
+    fetch("https://v8.dev/blog").then(() => "blog"),
+    fetch("https://v8.dev/docs").then(() => "docs"),
+])
+    .then((first) => {
+        // 只要有一个 fetch() 请求成功
+        console.log(first);
+    })
+    .catch((error) => {
+        // 所有三个 fetch() 全部请求失败
+        console.log(error);
+    });
+```
+
+Promise.resolve
+
+将数据转为 Promise 对象，有如下 4 种规则
+
+1. 参数是一个 Promise 实例: 原封不动的返回这个实例
+2. 参数是一个 thenable 对象(一个具有 then 方法的对象): 将这个对象转为 promise 对象然后立即执行`then()`方法
+
+```js
+let thenable = {
+    then: function (resolve, reject) {
+        resolve(42);
+    },
+};
+let p1 = Promise.resolve(thenable);
+p1.then(function (value) {
+    console.log(value); // 42
+});
+```
+
+3. 不带有任何参数: 返回一个 fulfilled 状态的 Promise 对象
+4. 除上述 3 种情况的任意类型数据: 返回一个 fulfilled 状态的 Promise 对象，并将参数作为 promise resolve 时的值
+
+Promise.reject
+
+返回一个状态为 rejected 的 promise 对象，参数会作为 reject 的理由向下传递
+
+Promise.try
+
+当不想区分函数 f 时同步还是异步函数，就可以使用 `Promise.try` 包裹，然后统一当作 Promise 来处理它
