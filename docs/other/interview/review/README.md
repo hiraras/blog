@@ -1,14 +1,14 @@
 # 面试复习
 
--   js 基础：es6 文档、this、作用域、继承、正则、事件循环、new、垃圾回收
--   css：flex、grid、bfc 条件及其应用
--   网络安全：常见攻击手段及预防
--   网络请求相关
--   react：react、redux、react-router、hooks
--   ts
--   面试题
--   过去记录的技术日记
--   写简历/面试的时候对一项技术，需要知道为什么用它，它能带来什么效益，再扩展到更广的解决相同问题有哪些不同的方案，为什么最终选了它。
+- js 基础：es6 文档、this、作用域、继承、正则、事件循环、new、垃圾回收
+- css：flex、grid、bfc 条件及其应用
+- 网络安全：常见攻击手段及预防
+- 网络请求相关
+- react：react、redux、react-router、hooks
+- ts
+- 面试题
+- 过去记录的技术日记
+- 写简历/面试的时候对一项技术，需要知道为什么用它，它能带来什么效益，再扩展到更广的解决相同问题有哪些不同的方案，为什么最终选了它。
 
 相关链接：https://juejin.cn/post/6844903885488783374
 
@@ -39,7 +39,7 @@ meet48:
 1. es6 基础
 2. css 基础/less/tailwind
 3. react
-4. 全局状态管理库(redux/zustand)
+4. 全局状态管理库(redux/zustand)，要知道它是如何实现的
 5. webpack/vite
 6. http 请求(fetch/axios)
 
