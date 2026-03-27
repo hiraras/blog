@@ -2,7 +2,7 @@
 
 - Caret-color  可以改变光标的颜色 可以尝试给 input 加上这个属性看看
 - shape-outside  可以改变盒子的形状，从而改变布局
-- display: flow-root BFC 清楚浮动的一种，常用的一般是 clear:both overflower:hidden
+- display: flow-root BFC 清楚浮动的一种，常用的一般是 clear:both overflow:hidden
 - background:concic-gradient(red 0 30%,green 30% 60%,blue 60% 100%)  角向渐变 可以用 css 画饼图
 - background-attachment 指定背景如何附着在容器上，可以对背景进行固定不随窗口改变高度滑动
 - filter:blur(10px)  背景虚化模糊，有时候很方便
