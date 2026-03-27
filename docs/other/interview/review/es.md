@@ -1319,3 +1319,131 @@ function* test() {}
 const it = test();
 console.log(it[Symbol.iterator]() === it); // true
 ```
+
+# Generator 的异步应用
+
+异步编程实现方案有 5 种，本质上是异步的实现方式的不同:
+
+1. 回调函数: 将异步任务的后续任务的执行交给异步任务来触发 - 回调地狱
+2. 事件监听: 针对某个行为先进行注册，触发交给处理事件的对象本身
+3. 发布/订阅: 对信息派发中心的某些事件进行注册，触发也交给发布的对象本身
+4. Promise 对象: 对回调函数的实现上的优化 代码冗余&只是回调函数的改进
+5. Generator 函数: 提供更灵活的事件处理能力，其中一个利用方式就是解决异步问题 - 需要有自执行器
+
+```js
+// Generator函数和Promise配合使用的案例
+var fetch = require("node-fetch");
+
+function* gen() {
+  var url = "https://api.github.com/users/github";
+  var result = yield fetch(url);
+  console.log(result.bio);
+}
+var g = gen();
+var result = g.next();
+
+result.value
+  .then(function (data) {
+    return data.json();
+  })
+  .then(function (data) {
+    g.next(data);
+  });
+```
+
+## 自执行的 Generator 异步辅助函数
+
+### 回调函数版本
+
+```js
+var fs = require("fs");
+var thunkify = require("thunkify");
+var readFileThunk = thunkify(fs.readFile);
+
+var gen = function* () {
+  var r1 = yield readFileThunk("/etc/fstab"); // readFileThunk函数的返回值接受一个函数作为回调函数
+  console.log(r1.toString());
+  var r2 = yield readFileThunk("/etc/shells");
+  console.log(r2.toString());
+};
+// 正常使用上面的函数
+var g = gen();
+
+var r1 = g.next();
+r1.value(function (err, data) {
+  if (err) throw err;
+  var r2 = g.next(data);
+  r2.value(function (err, data) {
+    if (err) throw err;
+    g.next(data);
+  });
+});
+// 仔细查看上面的代码，可以发现 Generator 函数的执行过程，其实是将同一个回调函数，反复传入next方法的value属性。这使得我们可以用递归来自动完成这个过程。
+
+// 自执行函数的关键就是根据不同的回调方案(回调函数、promise)实现不同版本的回调处理(接受和交换程序的执行权)
+function run(fn) {
+  var gen = fn();
+
+  function next(err, data) {
+    var result = gen.next(data);
+    if (result.done) return;
+    result.value(next);
+  }
+
+  next();
+}
+
+function* g() {
+  // ...
+}
+
+run(g);
+```
+
+### promise 版本
+
+```js
+var fs = require("fs");
+
+var readFile = function (fileName) {
+  return new Promise(function (resolve, reject) {
+    fs.readFile(fileName, function (error, data) {
+      if (error) return reject(error);
+      resolve(data);
+    });
+  });
+};
+
+var gen = function* () {
+  var f1 = yield readFile("/etc/fstab");
+  var f2 = yield readFile("/etc/shells");
+  console.log(f1.toString());
+  console.log(f2.toString());
+};
+
+// 正常使用上面的函数
+var g = gen();
+
+g.next().value.then(function (data) {
+  g.next(data).value.then(function (data) {
+    g.next(data);
+  });
+});
+
+// 自执行函数
+function run(gen) {
+  var g = gen();
+
+  function next(data) {
+    var result = g.next(data);
+    if (result.done) return result.value;
+    result.value.then(function (data) {
+      next(data);
+    });
+  }
+
+  next();
+}
+
+run(gen);
+```
