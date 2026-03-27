@@ -48,9 +48,9 @@ const { foo: foo } = { foo: "aaa" };
 
 ```js
 let a = 5,
-    b = 10;
+  b = 10;
 function test(strArr, value1, value2) {
-    console.log(strArr, value1, value2);
+  console.log(strArr, value1, value2);
 }
 test`${a} + ${b} = ${a + b}`;
 // ['', ' + ', ' = ', '', raw: Array(4)] 5 10
@@ -109,19 +109,19 @@ str.replace("123", "*"); // 'a*b456'
 const str = "a123b456";
 const reg = /\d+/g;
 str.replace(reg, function (...args) {
-    console.log(args);
-    // ['123', 1, 'a123b456']
-    // ['456', 5, 'a123b456']
-    return "*";
+  console.log(args);
+  // ['123', 1, 'a123b456']
+  // ['456', 5, 'a123b456']
+  return "*";
 });
 
 const str = "a123b456";
 const reg = /([a-z])(\d+)/g;
 str.replace(reg, function (...args) {
-    console.log(args);
-    // ['a123', 'a', '123', 0, 'a123b456']
-    // ['b456', 'b', '456', 4, 'a123b456']
-    return "*";
+  console.log(args);
+  // ['a123', 'a', '123', 0, 'a123b456']
+  // ['b456', 'b', '456', 4, 'a123b456']
+  return "*";
 });
 ```
 
@@ -293,10 +293,10 @@ arr1.concat(arr2, arr3); // [ 'a', 'b', 'c', 'd', 'e' ]
 
 ```js
 let arrayLike = {
-    0: "a",
-    1: "b",
-    2: "c",
-    length: 3,
+  0: "a",
+  1: "b",
+  2: "c",
+  length: 3,
 };
 
 // ES5 的写法
@@ -380,7 +380,7 @@ arr.with(3, 20); // [5, 10, 15, 20, 13]
 ```js
 const array = [1, 2, 3, 4, 5];
 array.group((num, index, array) => {
-    return num % 2 === 0 ? "even" : "odd";
+  return num % 2 === 0 ? "even" : "odd";
 });
 // { odd: [1, 3, 5], even: [2, 4] }
 
@@ -389,7 +389,7 @@ const array = [1, 2, 3, 4, 5];
 const odd = { odd: true };
 const even = { even: true };
 array.groupToMap((num, index, array) => {
-    return num % 2 === 0 ? even : odd;
+  return num % 2 === 0 ? even : odd;
 });
 //  Map { {odd: true}: [1, 3, 5], {even: true}: [2, 4] }
 ```
@@ -401,13 +401,13 @@ array.groupToMap((num, index, array) => {
 ```js
 let birth = "2000/01/01";
 const Person = {
-    name: "张三",
-    //等同于birth: birth
-    birth,
-    // 等同于hello: function ()...
-    hello() {
-        console.log("我的名字是", this.name);
-    },
+  name: "张三",
+  //等同于birth: birth
+  birth,
+  // 等同于hello: function ()...
+  hello() {
+    console.log("我的名字是", this.name);
+  },
 };
 new Person.hello(); // 报错，简写的对象方法不能当作构造函数
 ```
@@ -416,9 +416,9 @@ new Person.hello(); // 报错，简写的对象方法不能当作构造函数
 
 ```js
 let obj = {
-    ["h" + "ello"]() {
-        return "hi";
-    },
+  ["h" + "ello"]() {
+    return "hi";
+  },
 };
 obj.hello(); // hi
 ```
@@ -436,9 +436,9 @@ configurable：是否可删除或修改描述符
 const obj = { a: 1, b: 2 };
 let descriptors = Object.getOwnPropertyDescriptors(obj);
 Object.defineProperty(obj, "a", {
-    value: 4,
-    writable: false, // 下面的 obj.a = 5 会失效
-    configurable: false, // 下面的delete obj.a会失效，defineProperty重设a的enumerable会直接报错
+  value: 4,
+  writable: false, // 下面的 obj.a = 5 会失效
+  configurable: false, // 下面的delete obj.a会失效，defineProperty重设a的enumerable会直接报错
 });
 Object.defineProperty(obj, "a", { enumerable: false });
 descriptors = Object.getOwnPropertyDescriptors(obj);
@@ -455,13 +455,13 @@ console.log(obj);
 
 ```js
 const proto = {
-    foo: "hello",
+  foo: "hello",
 };
 const obj = {
-    foo: "world",
-    find() {
-        return super.foo;
-    },
+  foo: "world",
+  find() {
+    return super.foo;
+  },
 };
 Object.setPrototypeOf(obj, proto);
 obj.find(); // "hello"
@@ -471,12 +471,12 @@ obj.find(); // "hello"
 
 ```js
 try {
-    throw new AggregateError([new Error("some error")], "Hello");
+  throw new AggregateError([new Error("some error")], "Hello");
 } catch (e) {
-    console.log(e instanceof AggregateError); // true
-    console.log(e.message); // "Hello"
-    console.log(e.name); // "AggregateError"
-    console.log(e.errors); // [ Error: "some error" ]
+  console.log(e instanceof AggregateError); // true
+  console.log(e.message); // "Hello"
+  console.log(e.name); // "AggregateError"
+  console.log(e.errors); // [ Error: "some error" ]
 }
 ```
 
@@ -501,14 +501,14 @@ Object.fromEntries: 将键值对数组转化为对象
 
 ```js
 Object.fromEntries([
-    ["foo", "bar"],
-    ["baz", 42],
+  ["foo", "bar"],
+  ["baz", 42],
 ]);
 // { foo: "bar", baz: 42 }
 
 const entries = new Map([
-    ["foo", "bar"],
-    ["baz", 42],
+  ["foo", "bar"],
+  ["baz", 42],
 ]);
 Object.fromEntries(entries);
 // { foo: "bar", baz: 42 }
@@ -558,7 +558,7 @@ typeof s; // "symbol"
 s.description; // undefined
 s2.description; // 'foo'
 let a = {
-    [s]: "Hello!",
+  [s]: "Hello!",
 };
 a[s]; // 'Hello!'
 
@@ -584,9 +584,9 @@ Symbol.keyFor(s2); // undefined
 
 3. 内置 Symbol
 
--   Symbol.hasInstance: 当使用 instanceof 时默认调这个方法
+- Symbol.hasInstance: 当使用 instanceof 时默认调这个方法
 
--   Symbol.isConcatSpreadable: 当使用 concat 时，对象是否可以展开
+- Symbol.isConcatSpreadable: 当使用 concat 时，对象是否可以展开
 
 ```js
 let arr1 = ["c", "d"];
@@ -602,55 +602,55 @@ obj[Symbol.isConcatSpreadable] = true;
 ["a", "b"].concat(obj, "e"); // ['a', 'b', 'c', 'd', 'e']
 ```
 
--   Symbol.species: 创建衍生对象时，会使用该属性
--   Symbol.match: 当执行`str.match()`时会调用该属性
--   Symbol.replace: 当该对象被 `String.prototype.replace` 方法调用时，会返回该方法的返回值('Hello'.replace(x, 'World'))
--   Symbol.search: 当该对象被`String.prototype.search`方法调用时，会返回该方法的返回值('foobar'.search(new MySearch('foo')) )
--   Symbol.split: 当该对象被`String.prototype.split`方法调用时，会返回该方法的返回值('foobar'.split(new MySplitter('foo')))
--   Symbol.iterator: 指向该对象的默认遍历器方法
--   Symbol.toPrimitive: 该对象被转为原始类型的值时，会调用这个方法
--   Symbol.toStringTag: 用来设定一个字符串，当在目标对象上调用`Object.prototype.toString()`时，返回这个字符串的类型
+- Symbol.species: 创建衍生对象时，会使用该属性
+- Symbol.match: 当执行`str.match()`时会调用该属性
+- Symbol.replace: 当该对象被 `String.prototype.replace` 方法调用时，会返回该方法的返回值('Hello'.replace(x, 'World'))
+- Symbol.search: 当该对象被`String.prototype.search`方法调用时，会返回该方法的返回值('foobar'.search(new MySearch('foo')) )
+- Symbol.split: 当该对象被`String.prototype.split`方法调用时，会返回该方法的返回值('foobar'.split(new MySplitter('foo')))
+- Symbol.iterator: 指向该对象的默认遍历器方法
+- Symbol.toPrimitive: 该对象被转为原始类型的值时，会调用这个方法
+- Symbol.toStringTag: 用来设定一个字符串，当在目标对象上调用`Object.prototype.toString()`时，返回这个字符串的类型
 
 ```js
 class Collection {
-    get [Symbol.toStringTag]() {
-        return "xxx";
-    }
+  get [Symbol.toStringTag]() {
+    return "xxx";
+  }
 }
 let x = new Collection();
 Object.prototype.toString.call(x); // "[object xxx]"
 ```
 
--   Symbol.unscopables: 指向一个对象，对象属性值为 true 的属性，若在 with 命令中使用到该属性会被排除
+- Symbol.unscopables: 指向一个对象，对象属性值为 true 的属性，若在 with 命令中使用到该属性会被排除
 
 ```js
 // 没有 unscopables 时
 class MyClass {
-    foo() {
-        return 1;
-    }
+  foo() {
+    return 1;
+  }
 }
 var foo = function () {
-    return 2;
+  return 2;
 };
 with (MyClass.prototype) {
-    foo(); // 1
+  foo(); // 1
 }
 
 // 有 unscopables 时
 class MyClass {
-    foo() {
-        return 1;
-    }
-    get [Symbol.unscopables]() {
-        return { foo: true };
-    }
+  foo() {
+    return 1;
+  }
+  get [Symbol.unscopables]() {
+    return { foo: true };
+  }
 }
 var foo = function () {
-    return 2;
+  return 2;
 };
 with (MyClass.prototype) {
-    foo(); // 2
+  foo(); // 2
 }
 ```
 
@@ -670,7 +670,7 @@ delete: 删除某个值，返回布尔值，表示删除是否成功
 has: 返回布尔值，表示 Set 内是否存在该元素
 clear: 清除所有成员，没有返回值
 
--   遍历
+- 遍历
 
 keys()
 values()
@@ -714,8 +714,8 @@ has: 返回布尔值，表示数值是否为成员
 
 ```js
 const set = new Set([
-    ["foo", 1],
-    ["bar", 2],
+  ["foo", 1],
+  ["bar", 2],
 ]);
 const m1 = new Map(set);
 m1.get("foo"); // 1
@@ -732,7 +732,7 @@ has: 返回布尔值，表示 Map 内是否存在该键
 delete: 删除某个键值对，返回布尔值，表示删除是否成功
 clear: 清除所有成员，没有返回值
 
--   遍历
+- 遍历
 
 keys()
 values()
@@ -770,19 +770,19 @@ var proxy = new Proxy(target, handler);
 
 Proxy 支持的拦截操作一览，一共 13 种。
 
--   get(target, propKey, receiver)：拦截对象属性的读取，比如 proxy.foo 和 proxy['foo']。
--   set(target, propKey, value, receiver)：拦截对象属性的设置，比如 proxy.foo = v 或 proxy['foo'] = v，返回一个布尔值。
--   has(target, propKey)：拦截 propKey in proxy 的操作，返回一个布尔值。
--   deleteProperty(target, propKey)：拦截 delete proxy[propKey]的操作，返回一个布尔值。
--   ownKeys(target)：拦截 Object.getOwnPropertyNames(proxy)、Object.getOwnPropertySymbols(proxy)、Object.keys(proxy)、for...in 循环，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而 Object.keys()的返回结果仅包括目标对象自身的可遍历属性。
--   getOwnPropertyDescriptor(target, propKey)：拦截 Object.getOwnPropertyDescriptor(proxy, propKey)，返回属性的描述对象。
--   defineProperty(target, propKey, propDesc)：拦截 Object.defineProperty(proxy, propKey, propDesc）、Object.defineProperties(proxy, propDescs)，返回一个布尔值。
--   preventExtensions(target)：拦截 Object.preventExtensions(proxy)，返回一个布尔值。
--   getPrototypeOf(target)：拦截 Object.getPrototypeOf(proxy)，返回一个对象。
--   isExtensible(target)：拦截 Object.isExtensible(proxy)，返回一个布尔值。
--   setPrototypeOf(target, proto)：拦截 Object.setPrototypeOf(proxy, proto)，返回一个布尔值。如果目标对象是函数，那么还有两种额外操作可以拦截。
--   apply(target, object, args)：拦截 Proxy 实例作为函数调用的操作，比如 proxy(...args)、proxy.call(object, ...args)、proxy.apply(...)。
--   construct(target, args)：拦截 Proxy 实例作为构造函数调用的操作，比如 new proxy(...args)。
+- get(target, propKey, receiver)：拦截对象属性的读取，比如 proxy.foo 和 proxy['foo']。
+- set(target, propKey, value, receiver)：拦截对象属性的设置，比如 proxy.foo = v 或 proxy['foo'] = v，返回一个布尔值。
+- has(target, propKey)：拦截 propKey in proxy 的操作，返回一个布尔值。
+- deleteProperty(target, propKey)：拦截 delete proxy[propKey]的操作，返回一个布尔值。
+- ownKeys(target)：拦截 Object.getOwnPropertyNames(proxy)、Object.getOwnPropertySymbols(proxy)、Object.keys(proxy)、for...in 循环，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而 Object.keys()的返回结果仅包括目标对象自身的可遍历属性。
+- getOwnPropertyDescriptor(target, propKey)：拦截 Object.getOwnPropertyDescriptor(proxy, propKey)，返回属性的描述对象。
+- defineProperty(target, propKey, propDesc)：拦截 Object.defineProperty(proxy, propKey, propDesc）、Object.defineProperties(proxy, propDescs)，返回一个布尔值。
+- preventExtensions(target)：拦截 Object.preventExtensions(proxy)，返回一个布尔值。
+- getPrototypeOf(target)：拦截 Object.getPrototypeOf(proxy)，返回一个对象。
+- isExtensible(target)：拦截 Object.isExtensible(proxy)，返回一个布尔值。
+- setPrototypeOf(target, proto)：拦截 Object.setPrototypeOf(proxy, proto)，返回一个布尔值。如果目标对象是函数，那么还有两种额外操作可以拦截。
+- apply(target, object, args)：拦截 Proxy 实例作为函数调用的操作，比如 proxy(...args)、proxy.call(object, ...args)、proxy.apply(...)。
+- construct(target, args)：拦截 Proxy 实例作为构造函数调用的操作，比如 new proxy(...args)。
 
 Proxy.revocable
 
@@ -814,19 +814,19 @@ Proxy.revocable()的一个使用场景是，目标对象不允许直接访问，
 
 静态方法
 
--   Reflect.apply(target, thisArg, args)
--   Reflect.construct(target, args)
--   Reflect.get(target, name, receiver)
--   Reflect.set(target, name, value, receiver)
--   Reflect.defineProperty(target, name, desc)
--   Reflect.deleteProperty(target, name)
--   Reflect.has(target, name)
--   Reflect.ownKeys(target)
--   Reflect.isExtensible(target)
--   Reflect.preventExtensions(target)
--   Reflect.getOwnPropertyDescriptor(target, name)
--   Reflect.getPrototypeOf(target)
--   Reflect.setPrototypeOf(target, prototype)
+- Reflect.apply(target, thisArg, args)
+- Reflect.construct(target, args)
+- Reflect.get(target, name, receiver)
+- Reflect.set(target, name, value, receiver)
+- Reflect.defineProperty(target, name, desc)
+- Reflect.deleteProperty(target, name)
+- Reflect.has(target, name)
+- Reflect.ownKeys(target)
+- Reflect.isExtensible(target)
+- Reflect.preventExtensions(target)
+- Reflect.getOwnPropertyDescriptor(target, name)
+- Reflect.getPrototypeOf(target)
+- Reflect.setPrototypeOf(target, prototype)
 
 # Promise
 
@@ -872,28 +872,28 @@ Promise.resolve(222).then((data) => {
 })
 ```
 
--   实例方法
+- 实例方法
 
 then: 它会对之前的 promise 对象的状态变化回调不同方法，如果是跟在 `.then` 之后的 `.then` 方法，会将前面的 then 方法的 return 值，使用 Promise.resolve 进行转化
 
 finally: 不管 promise 状态时 fulfilled 还是 rejected 都会执行，它的返回值类似 then 的 return
 
--   静态方法
+- 静态方法
 
 Promise.all
 
 ```js
 // 只有所有promise都变成fulfilled，Promise.all才会fulfilled，只要有任意一个rejected，Promise.all就会rejected
 const promises = [2, 3, 5, 7, 11, 13].map(function (id) {
-    return getJSON("/post/" + id + ".json");
+  return getJSON("/post/" + id + ".json");
 });
 Promise.all(promises)
-    .then(function (posts) {
-        // ...
-    })
-    .catch(function (reason) {
-        // ...
-    });
+  .then(function (posts) {
+    // ...
+  })
+  .catch(function (reason) {
+    // ...
+  });
 ```
 
 Promise.race
@@ -902,10 +902,10 @@ Promise.race
 // 只要有一个promise状态率先发生改变，它就会跟着变
 // 只要fetch在5s内没有fulfilled就变为rejected
 const p = Promise.race([
-    fetch("/resource-that-may-take-a-while"),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => reject(new Error("request timeout")), 5000);
-    }),
+  fetch("/resource-that-may-take-a-while"),
+  new Promise(function (resolve, reject) {
+    setTimeout(() => reject(new Error("request timeout")), 5000);
+  }),
 ]);
 p.then(console.log).catch(console.error);
 ```
@@ -920,7 +920,7 @@ const rejected = Promise.reject(-1);
 const allSettledPromise = Promise.allSettled([resolved, rejected]);
 
 allSettledPromise.then(function (results) {
-    console.log(results);
+  console.log(results);
 });
 // [
 //    { status: 'fulfilled', value: 42 },
@@ -933,18 +933,18 @@ Promise.any
 ```js
 // 任意一个promise状态变为fulfilled它就会fulfilled，所有promise都rejected它就会rejected
 Promise.any([
-    fetch("https://v8.dev/").then(() => "home"),
-    fetch("https://v8.dev/blog").then(() => "blog"),
-    fetch("https://v8.dev/docs").then(() => "docs"),
+  fetch("https://v8.dev/").then(() => "home"),
+  fetch("https://v8.dev/blog").then(() => "blog"),
+  fetch("https://v8.dev/docs").then(() => "docs"),
 ])
-    .then((first) => {
-        // 只要有一个 fetch() 请求成功
-        console.log(first);
-    })
-    .catch((error) => {
-        // 所有三个 fetch() 全部请求失败
-        console.log(error);
-    });
+  .then((first) => {
+    // 只要有一个 fetch() 请求成功
+    console.log(first);
+  })
+  .catch((error) => {
+    // 所有三个 fetch() 全部请求失败
+    console.log(error);
+  });
 ```
 
 Promise.resolve
@@ -956,13 +956,13 @@ Promise.resolve
 
 ```js
 let thenable = {
-    then: function (resolve, reject) {
-        resolve(42);
-    },
+  then: function (resolve, reject) {
+    resolve(42);
+  },
 };
 let p1 = Promise.resolve(thenable);
 p1.then(function (value) {
-    console.log(value); // 42
+  console.log(value); // 42
 });
 ```
 
@@ -983,11 +983,11 @@ Promise.try
 
 ```js
 Number.prototype[Symbol.iterator] = function* () {
-    yield 1;
-    yield 2;
+  yield 1;
+  yield 2;
 };
 for (let i of 1) {
-    console.log(i); // 输出 1 2
+  console.log(i); // 输出 1 2
 }
 ```
 
@@ -1005,45 +1005,317 @@ for (let i of 1) {
 3. yield\*
 4. 由于数组的遍历会调用遍历器接口，所以任何接受数组作为参数的场合，其实都调用了遍历器接口
 
--   for...of
--   Array.from()
--   Map(), Set(), WeakMap(), WeakSet()（比如 new Map([['a',1],['b',2]])）
--   Promise.all()
--   Promise.race()
+- for...of
+- Array.from()
+- Map(), Set(), WeakMap(), WeakSet()（比如 new Map([['a',1],['b',2]])）
+- Promise.all()
+- Promise.race()
 
 ## 遍历器对象的工具方法
 
 ```js
 const arr = ["a", "", "b", "", "c", "", "d", "", "e"];
 
-arr.values() // creates an iterator
-    .filter((x) => x.length > 0)
-    .drop(1)
-    .take(3)
-    .map((x) => `=${x}=`)
-    .toArray();
+arr
+  .values() // creates an iterator
+  .filter((x) => x.length > 0)
+  .drop(1)
+  .take(3)
+  .map((x) => `=${x}=`)
+  .toArray();
 // ['=b=', '=c=', '=d=']
 ```
 
 上面示例中，arr 是一个数组，它的 values() 方法返回的是一个遍历器对象，以前要使用 for...of 循环来处理，现在有了工具方法，就可以直接链式处理了。
 
--   返回遍历器对象的方法
-    iterator.filter(filterFn)
-    iterator.map(mapFn)
-    iterator.flatMap(mapFn)
+- 返回遍历器对象的方法
+  iterator.filter(filterFn)
+  iterator.map(mapFn)
+  iterator.flatMap(mapFn)
 
--   返回布尔值的方法
-    iterator.some(fn)
-    iterator.every(fn)
+- 返回布尔值的方法
+  iterator.some(fn)
+  iterator.every(fn)
 
--   返回其他值的方法
-    iterator.find(fn)
-    iterator.reduce(reducer, initialValue?)
+- 返回其他值的方法
+  iterator.find(fn)
+  iterator.reduce(reducer, initialValue?)
 
--   不返回值的方法
-    iterator.forEach(fn)
+- 不返回值的方法
+  iterator.forEach(fn)
 
--   以下是遍历器对象独有的方法。
-    iterator.drop(limit)：返回一个遍历器对象，丢弃前 limit 个成员。
-    iterator.take(limit)：返回一个遍历器对象，包含前 limit 个成员。
-    iterator.toArray()：返回一个数组，包含所有成员。
+- 以下是遍历器对象独有的方法。
+  iterator.drop(limit)：返回一个遍历器对象，丢弃前 limit 个成员。
+  iterator.take(limit)：返回一个遍历器对象，包含前 limit 个成员。
+  iterator.toArray()：返回一个数组，包含所有成员。
+
+# Generator 函数
+
+调用 Generator 函数，返回一个遍历器对象，代表 Generator 函数的内部指针。以后，每次调用遍历器对象的 next 方法，就会返回一个有着 value 和 done 两个属性的对象。value 属性表示当前的内部状态的值，是 yield 表达式后面那个表达式的值；done 属性是一个布尔值，表示是否遍历结束。
+
+```js
+// Generator函数初次调用只会返回遍历器对象，而并不会开始执行函数内部逻辑，只有不断调用next()函数才会一步步往下执行
+function* test() {
+  console.log(1);
+  yield console.log(2);
+  console.log(3);
+}
+const it = test(); // 啥也不输出
+it.next(); // 输出 1 2
+
+// yield 后面的表达式，执行到yield时会先执行，然后通过yield和next传出去
+var a = 1;
+function* test() {
+  yield;
+  yield (a = 2 + 3);
+}
+const it = test();
+console.log(a); // 1
+it.next(); // {value: undefined, done: false}
+console.log(a); // 1
+it.next(); // {value: 5, done: false}
+console.log(a); // 5
+console.log("next:", it.next()); // {value: undefined, done: true}
+
+// yield 如果用在另一个表达式之中，必须放在圆括号里
+function* demo() {
+  console.log('Hello' + yield); // SyntaxError
+  console.log('Hello' + yield 123); // SyntaxError
+
+  console.log('Hello' + (yield)); // OK
+  console.log('Hello' + (yield 123)); // OK
+}
+// yield表达式用作函数参数或放在赋值表达式的右边，可以不加括号。
+function* demo() {
+  foo(yield 'a', yield 'b'); // OK
+  let input = yield; // OK
+}
+
+// Generator 函数执行后，返回一个遍历器对象。该对象本身也具有Symbol.iterator属性，执行后返回自身。
+function* gen(){
+  // some code
+}
+var g = gen();
+g[Symbol.iterator]() === g // true
+
+// next() 方法可以带一个参数，该参数会被当做上一个yield表达式的返回值
+function* test() {
+    const a = yield 99;
+    console.log(a);
+    return 100;
+}
+const it = test();
+console.log(it.next(200))
+console.log(it.next(200))
+
+// for...of 循环遍历器时，一旦next方法的返回对象 done 属性为true，循环就会终止，且不包含这个value
+function* foo() {
+  yield 1;
+  yield 2;
+  yield 3;
+  yield 4;
+  yield 5;
+  return 6;
+}
+
+for (let v of foo()) {
+  console.log(v); // 输出 1 2 3 4 5
+}
+
+// throw(),可以在函数体外抛出错误，然后在Generator函数体内捕获
+var g = function* () {
+  try {
+    yield;
+  } catch (e) {
+    console.log('内部捕获', e);
+  }
+};
+
+var i = g();
+i.next();
+
+try {
+  i.throw('a');
+  i.throw('b');
+} catch (e) {
+  console.log('外部捕获', e);
+}
+// 内部捕获 a
+// 外部捕获 b
+
+// 另一个例子
+var g = function* () {
+  while (true) {
+    yield;
+    console.log('内部捕获', e);
+  }
+};
+
+var i = g();
+i.next();
+
+try {
+  i.throw('a');
+  i.throw('b');
+} catch (e) {
+  console.log('外部捕获', e);
+}
+
+// throw方法抛出的错误要被内部捕获，前提是必须至少执行过一次next方法
+function* gen() {
+  try {
+    yield 1;
+  } catch (e) {
+    console.log('内部捕获');
+  }
+}
+
+var g = gen();
+g.throw(1);
+// Uncaught 1
+
+// throw方法被内部捕获以后，会附带执行到下一条yield表达式，等同于执行一次next方法，且不影响后续执行
+var gen = function* gen(){
+  try {
+    yield 1;
+  } catch (e) {
+    yield 2;
+  }
+  yield 3;
+}
+
+var g = gen();
+g.next() // { value:1, done:false }
+g.throw() // { value:2, done:false }
+g.next() // { value:3, done:false }
+g.next() // { value:undefined, done:true }
+
+// 另外提一个，返回的遍历器对象继承于Generator函数
+function* test(){}
+const it = test()
+test.prototype === it.__proto__ // true
+```
+
+有这么个理解，可以使 `next()`/`throw()`/`return()`更好理解：三个方法都是让 generator 恢复执行，效果上的不同在于，`it.next( value )`是将 generator 里面的 yield 表达式 _替换_ 为一个值，`it.throw( value )`是将 yield 表达式替换为一个 throw 语句，`it.return( value )`是将 yield 表达式替换为一个 return 语句。
+
+```js
+function* numbers() {
+  yield 1;
+  try {
+    yield 2;
+    yield 3;
+  } finally {
+    yield 4;
+    yield 5;
+  }
+  yield 6;
+}
+var g = numbers();
+g.next(); // { value: 1, done: false }
+g.next(); // { value: 2, done: false }
+g.return(7); // { value: 4, done: false }
+g.next(); // { value: 5, done: false }
+g.next(); // { value: 7, done: true }
+
+// 普通函数在try里执行return语句行为是一致的
+function test() {
+  try {
+    console.log(1);
+    return 111;
+  } finally {
+    console.log("finally");
+  }
+}
+console.log(test());
+// 1
+// finally
+// 111
+```
+
+yield\*: 用来在一个 Generator 函数里面执行另一个 Generator 函数。相当于在内部使用 for...of
+
+```js
+function* bar() {
+  yield "x";
+  yield* foo();
+  yield "y";
+}
+
+// 等同于
+function* bar() {
+  yield "x";
+  yield "a";
+  yield "b";
+  yield "y";
+}
+
+// 等同于
+function* bar() {
+  yield "x";
+  for (let v of foo()) {
+    yield v;
+  }
+  yield "y";
+}
+
+for (let v of bar()) {
+  console.log(v);
+}
+// "x"
+// "a"
+// "b"
+// "y"
+
+// 另一个例子
+function* concat(iter1, iter2) {
+  yield* iter1;
+  yield* iter2;
+}
+
+// 等同于
+
+function* concat(iter1, iter2) {
+  for (var value of iter1) {
+    yield value;
+  }
+  for (var value of iter2) {
+    yield value;
+  }
+}
+
+// 如果被代理的 Generator 函数有return语句，那么就可以向代理它的 Generator 函数返回数据。
+function* foo() {
+  yield 2;
+  yield 3;
+  return "foo";
+}
+
+function* bar() {
+  yield 1;
+  var v = yield* foo();
+  console.log("v: " + v);
+  yield 4;
+}
+
+var it = bar();
+
+it.next();
+// {value: 1, done: false}
+it.next();
+// {value: 2, done: false}
+it.next();
+// {value: 3, done: false}
+it.next();
+// "v: foo"
+// {value: 4, done: false}
+it.next();
+// {value: undefined, done: true}
+```
+
+for...of 遍历时会先调用被遍历对象的`[Symbol.iterator]`函数，然后进行遍历，这与直接遍历遍历器其实不矛盾
+
+```js
+function* test() {}
+const it = test();
+console.log(it[Symbol.iterator]() === it); // true
+```
