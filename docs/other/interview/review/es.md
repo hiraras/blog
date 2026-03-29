@@ -1565,3 +1565,364 @@ console.log("Y");
  * 5. 输出 102
  */
 ```
+
+# Class
+
+```js
+// 基本使用
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    toString() {
+        // 不需要function关键字
+        return "(" + this.x + ", " + this.y + ")";
+    }
+    get prop() {
+        return "getter";
+    }
+    set prop(value) {
+        console.log("setter: " + value);
+    }
+}
+
+const MyClass = class Me {
+    getClassName() {
+        return Me.name;
+    }
+};
+let inst = new MyClass();
+inst.getClassName(); // Me
+Me.name; // ReferenceError: Me is not defined
+```
+
+类的所有方法都定义在 prototype 上
+
+```js
+class Point {
+    constructor() {}
+    toString() {}
+    toValue() {}
+}
+// 等同于
+Point.prototype = {
+    constructor() {},
+    toString() {},
+    toValue() {},
+};
+```
+
+## 类与 function 的区别
+
+1. 类内部所有定义的方法都是不可枚举的
+
+```js
+class Point {
+    constructor(x, y) {}
+
+    toString() {}
+}
+
+Object.keys(Point.prototype);
+// []
+Object.getOwnPropertyNames(Point.prototype);
+// ["constructor","toString"]
+```
+
+2. class 必须使用 new 调用
+
+```js
+class Foo {
+    constructor() {
+        return Object.create(null);
+    }
+}
+Foo();
+// TypeError: Class constructor Foo cannot be invoked without 'new'
+```
+
+3. 不存在提升
+
+```js
+// 如果有提升，因为let不提升，就会报错
+{
+    let Foo = class {};
+    class Bar extends Foo {}
+}
+```
+
+## 静态方法和静态属性
+
+```js
+class Foo {
+    static x = 1;
+    static classMethod() {
+        return "hello";
+    }
+}
+
+Foo.classMethod(); // 'hello'
+console.log(Foo.x); // 1
+
+var foo = new Foo();
+foo.classMethod();
+
+// 静态方法包含的this指的是类，而不是实例
+class Foo {
+    static bar() {
+        this.baz();
+    }
+    static baz() {
+        console.log("hello");
+    }
+    baz() {
+        console.log("world");
+    }
+}
+
+Foo.bar(); // hello
+
+// 子类能继承父类的静态方法
+class Foo {
+    static classMethod() {
+        return "hello";
+    }
+}
+
+class Bar extends Foo {}
+
+Bar.classMethod(); // 'hello'
+```
+
+## 私有属性和私有方法
+
+```js
+// 只能在内部引用
+class IncreasingCounter {
+    #count = 0;
+    get value() {
+        console.log("Getting the current value!");
+        return this.#count;
+    }
+    increment() {
+        this.#count++;
+    }
+}
+const counter = new IncreasingCounter();
+counter.#count; // 报错
+counter.#count = 42; // 报错
+
+// 不管是在类内还是类外，读取不存在的私有属性都会报错
+class IncreasingCounter {
+    #count = 0;
+    get value() {
+        console.log("Getting the current value!");
+        return this.#myCount; // 报错
+    }
+    increment() {
+        this.#count++;
+    }
+}
+
+const counter = new IncreasingCounter();
+counter.#myCount; // 报错
+
+// 私有方法
+class FakeMath {
+    static PI = 22 / 7;
+    static #totallyRandomNumber = 4;
+
+    static #computeRandomNumber() {
+        return FakeMath.#totallyRandomNumber;
+    }
+
+    static random() {
+        console.log("I heard you like random numbers…");
+        return FakeMath.#computeRandomNumber();
+    }
+}
+
+FakeMath.PI; // 3.142857142857143
+FakeMath.random();
+// I heard you like random numbers…
+// 4
+FakeMath.#totallyRandomNumber; // 报错
+FakeMath.#computeRandomNumber(); // 报错
+```
+
+## new.target 属性
+
+ES6 为 new 命令引入了一个 new.target 属性，该属性一般用在构造函数之中，返回 new 命令作用于的那个构造函数。如果构造函数不是通过 new 命令或 Reflect.construct()调用的，new.target 会返回 undefined
+
+```js
+class Rectangle {
+    constructor() {
+        console.log(new.target === Rectangle); // true
+    }
+}
+var obj = new Rectangle();
+
+// 子类继承父类时，new.target 会返回子类
+class Rectangle {
+    constructor(length, width) {
+        console.log(new.target === Square);
+    }
+}
+class Square extends Rectangle {
+    constructor(length, width) {
+        super(length, width);
+    }
+}
+
+var obj = new Square(3); // 输出 true
+```
+
+# 类的继承
+
+ES6 规定，子类必须在 constructor()方法中调用 super()，否则就会报错。这是因为子类自己的 this 对象，必须先通过父类的构造函数完成塑造，得到与父类同样的实例属性和方法，然后再对其进行加工，添加子类自己的实例属性和方法。
+
+为什么子类的构造函数，一定要调用 super()？原因就在于 ES6 的继承机制，与 ES5 完全不同。ES5 的继承机制，是先创造一个独立的子类的实例对象，然后再将父类的方法添加到这个对象上面，即“实例在前，继承在后”。ES6 的继承机制，则是先将父类的属性和方法，加到一个空的对象上面，然后再将该对象作为子类的实例，即“继承在前，实例在后”。这就是为什么 ES6 的继承必须先调用 super()方法，因为这一步会生成一个继承父类的 this 对象，没有这一步就无法继承父类。
+
+```js
+class Foo {
+    constructor() {
+        console.log(1);
+    }
+}
+
+class Bar extends Foo {
+    constructor() {
+        super();
+        console.log(2);
+    }
+}
+
+const bar = new Bar();
+// 1
+// 2
+```
+
+## 私有属性和私有方法的继承
+
+子类无法继承父类的私有属性和私有方法，或者说，私有属性和私有方法只能在定义它的 class 里面使用。
+
+```js
+class Foo {
+    #p = 1;
+    #m() {
+        console.log("hello");
+    }
+}
+
+class Bar extends Foo {
+    constructor() {
+        super();
+        console.log(this.#p); // 报错
+        this.#m(); // 报错
+    }
+}
+```
+
+## 普通属性，普通方法，静态属性和静态方法的继承
+
+简而言之，普通属性会定义到实例上，其他都定义在祖先上
+
+```js
+class Rectangle {
+    a = 1;
+    static b = 2;
+    say() {
+        console.log("rectangle say");
+    }
+    static sing() {
+        console.log("rectangle sing");
+    }
+}
+
+class Square extends Rectangle {
+    constructor() {
+        super();
+    }
+}
+
+var obj = new Square(3);
+var parent = Object.getPrototypeOf(obj);
+var grandParent = Object.getPrototypeOf(parent);
+
+// 普通属性，定义在实例上，祖先上没有
+console.log(
+    obj.hasOwnProperty("a"), // true
+    parent.hasOwnProperty("a"), // false
+    grandParent.hasOwnProperty("a"), // false
+    obj.a, // 1
+    parent.a, // undefined
+    grandParent.a // undefined
+);
+
+// 普通方法，定义在原型上，祖先上有
+console.log(
+    obj.hasOwnProperty("say"), // false
+    parent.hasOwnProperty("say"), // false
+    grandParent.hasOwnProperty("say"), // true
+    obj.say() // rectangle say
+);
+
+// 静态属性，定义在构造函数上，祖先上有
+console.log(
+    Square.hasOwnProperty("b"), // false
+    Rectangle.hasOwnProperty("b"), // true
+    Square.b, // 2
+    Rectangle.b // 2
+);
+Square.b = 99;
+console.log(
+    Square.hasOwnProperty("b"), // true
+    Rectangle.hasOwnProperty("b"), // true
+    Square.b, // 99
+    Rectangle.b // 2
+);
+
+// 静态方法，定义在构造函数上，祖先上有
+console.log(
+    Square.hasOwnProperty("sing"), // false
+    Rectangle.hasOwnProperty("sing"), // true
+    Square.sing(), // rectangle sing
+    Rectangle.sing() // rectangle sing
+);
+```
+
+## super
+
+1. 作为函数，只能用在子类的构造函数之中，代表父类的构造函数
+2. 作为对象，在普通方法中指向父类的原型对象，在静态方法中，指向父类
+
+由于 super()在子类构造方法中执行时，子类的属性和方法还没有绑定到 this，所以如果存在同名属性，此时拿到的是父类的属性
+
+```js
+class A {
+    name = "A";
+    constructor() {
+        console.log("My name is " + this.name);
+    }
+}
+
+class B extends A {
+    name = "B";
+}
+
+const b = new B(); // My name is A
+```
+
+## 类的 prototype 属性和 **proto** 属性
+
+类的继承存在两条继承路线
+
+```js
+class A {}
+
+class B extends A {}
+
+B.__proto__ === A; // true
+B.prototype.__proto__ === A.prototype; // true
+```
