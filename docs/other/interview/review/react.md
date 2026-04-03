@@ -705,3 +705,70 @@ function GoodSearch() {
 }
 // 输入流畅，搜索延迟处理
 ```
+
+### 路由守卫
+
+```js
+// CustomRoute
+import { useNavigates } from '@/store/useNavigates'
+import { useSSOLogin } from '@/store/useSSOLogin'
+import { useUserInfo } from '@/store/useUserInfo'
+import React, { useMemo } from 'react'
+import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom'
+
+type Props = {
+  checkNavigate?: boolean
+} & RouteProps
+
+const LOGIN_CHECK_PATH = ['/profile', '/snh48vote/center']
+
+function checkLoginPath(path: string | readonly string[]) {
+  if (typeof path === 'string') {
+    return LOGIN_CHECK_PATH.some((p) => path.startsWith(p))
+  }
+  return path.some((item) => {
+    return LOGIN_CHECK_PATH.some((p) => item.startsWith(p))
+  })
+}
+
+const CustomRoute: React.FC<Props> = ({ checkNavigate = false, ...props }) => {
+  const { navigates, hasGotten } = useNavigates()
+  const { info } = useUserInfo()
+  const { isChecked } = useSSOLogin()
+  const { pathname } = useLocation()
+  const isActive = pathname === props.path
+
+  const checkLogin = useMemo(() => {
+    if (props.path === undefined) {
+      return false
+    }
+    return checkLoginPath(props.path)
+  }, [props.path])
+
+  if (checkLogin || checkNavigate) {
+    if (!isActive) {
+      return <Route {...props} />
+    }
+    if (checkNavigate && !hasGotten) {
+      return null
+    }
+    if (checkNavigate && hasGotten) {
+      if (!navigates.some((n) => n.path === props.path && n.visible)) {
+        return <Redirect to="/" />
+      }
+    }
+    if (checkLogin && !isChecked) {
+      return null
+    }
+    if (checkLogin && isChecked) {
+      if (!info) {
+        return <Redirect to="/" />
+      }
+    }
+  }
+
+  return <Route {...props} />
+}
+
+export default React.memo(CustomRoute)
+```

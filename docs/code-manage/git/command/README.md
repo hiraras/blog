@@ -71,3 +71,9 @@ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Crese
 **git checkout [tagName]**：检出 tag，这将使存储库进入游离 HEAD 状态，此时可以再用 `git checkout -b [branchName]` 切出新分支
 
 **git checkout -b [branchName] [tagName]**：创建一个分支，并将其设置为 tag 所指向的提交
+
+**git stash**: 将当前修改暂存到缓存中，当要暂存当前修改，去处理其他分支的内容时，很好用
+
+**git stash list**: stash 命令可以存储多份修改，list 可以列出当前储存的所有 stash 列表
+
+**git stash drop [stashname]**: 删除指定 stash 缓存
