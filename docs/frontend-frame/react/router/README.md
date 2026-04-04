@@ -9,3 +9,16 @@
 # Switch
 
 在 Switch 中，路由的配置类似于 switch 语句，当匹配到某一个子路由设定的规则，就执行子路由的行为，并 return，后续内容不做处理
+
+```js
+// 类似于js的switch
+switch (path) {
+    case "path1":
+        return <Path1Comp />;
+    case "path2":
+        return <Path2Comp />;
+    case "redirectPath":
+        return history.replace("redirectedPath");
+    // ...
+}
+```

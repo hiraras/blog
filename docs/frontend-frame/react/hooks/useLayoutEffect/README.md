@@ -1,8 +1,8 @@
 ## useLayoutEffect
 
-useLayoutEffect 是 useEffect 的一个版本，在浏览器**重新绘制屏幕之前**触发，换句话说它会阻止浏览器的重绘
+useLayoutEffect 是 useEffect 的一个版本，在浏览器**重新绘制屏幕之前**触发，它会阻止浏览器的重绘
 
-**使用它的目的是让开发者使用布局信息来渲染**
+**类似于 class 组件的 getSnapShotBeforeUpdate，在函数式组件可以认为两者等同，混用情况下，它在 getSnapShotBeforeUpdate 之后触发**
 
 ### 参数
 
@@ -17,27 +17,27 @@ const [top, setTop] = useState(0);
 
 // 更新box的位置，并且不会闪烁，使用useEffect在旧设备会看到box明显的位置变化
 useLayoutEffect(() => {
-  setTop(200);
+    setTop(200);
 }, []);
 
 <div className={styles.page}>
-  <div className={styles.box} style={{ top }}></div>
+    <div className={styles.box} style={{ top }}></div>
 </div>;
 ```
 
 ```css
 .page {
-  position: relative;
-  height: 100vh;
-  border: 1px solid black;
+    position: relative;
+    height: 100vh;
+    border: 1px solid black;
 }
 
 .box {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300px;
-  height: 300px;
-  background-color: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    background-color: red;
 }
 ```

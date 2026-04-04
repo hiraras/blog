@@ -4,27 +4,27 @@
 
 ### 参数
 
-- 第一个参数为一个函数
-  要执行的副作用函数，该函数可返回一个函数，当依赖发生了变化，在组件更新前会先调用返回的函数，可在此清除副作用，然后，组件更新后副作用函数会重新创建
-- 第二个参数为一个数组（可忽略）
-  当两次渲染的依赖列表中的任意一个元素值发生了变化（不是数组本身），副作用函数就会重新创建并执行，当为一个空数组时，副作用函数只会执行一次（相当于 componentDidMount ），当不传数组，则每次更新都会执行
+-   第一个参数为一个函数
+    要执行的副作用函数，该函数可返回一个函数，当依赖发生了变化，在组件更新前会先调用返回的函数，可在此清除副作用，然后，组件更新后副作用函数会重新创建
+-   第二个参数为一个数组（可忽略）
+    当两次渲染的依赖列表中的任意一个元素值发生了变化（不是数组本身），副作用函数就会重新创建并执行，当为一个空数组时，副作用函数只会执行一次（相当于 componentDidMount ），当不传数组，则每次更新都会执行
 
 ```js
 const [title, setTitle] = useState("");
 useEffect(() => {
-  document.title = title;
+    document.title = title;
 }, [title]); // 组件第一次渲染时会执行一次，后续只有title变化时才会重复执行
 ```
 
 ```js
 // 清除副作用
 useEffect(() => {
-  const timer = setInterval(() => {
-    // ...
-  }, 1000);
-  return () => {
-    clearInterval(timer);
-  };
+    const timer = setInterval(() => {
+        // ...
+    }, 1000);
+    return () => {
+        clearInterval(timer);
+    };
 }, []);
 ```
 
@@ -35,16 +35,16 @@ useEffect(() => {
 ```js
 const [data, setData] = useState(null);
 useEffect(() => {
-  let ignore = false;
-  // 当key发生变化请求会重新发出，但因为旧的副作用的ignore被赋值为true，data并不会被更新
-  fetch(`xxx${key}`).then((res) => {
-    if (!ignore) {
-      setData(res);
-    }
-  });
-  return () => {
-    ignore = true;
-  };
+    let ignore = false;
+    // 当key发生变化请求会重新发出，但因为旧的副作用的ignore被赋值为true，data并不会被更新
+    fetch(`xxx${key}`).then((res) => {
+        if (!ignore) {
+            setData(res);
+        }
+    });
+    return () => {
+        ignore = true;
+    };
 }, [key]);
 ```
 

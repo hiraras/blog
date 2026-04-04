@@ -4,11 +4,11 @@
 
 将网络传输这个大问题，分层进行解决
 
-- 物理层（光纤/双绞线/同轴电缆/集线器）：不同设备如何处理不同信号
-- 数据链路层（MAC/交换机）：如何在一个子网中找到对方
-- 网络层（IP/路由器）：如何在互联网中找到对方
-- 传输层（TCP/UDP）：如何保证消息的可靠传递
-- 应用层（HTTP/FTP/DNS/SMTP/POP3）：跟具体应用相关的消息格式
+-   物理层（光纤/双绞线/同轴电缆/集线器）：不同设备如何处理不同信号
+-   数据链路层（MAC/交换机）：如何在一个子网中找到对方
+-   网络层（IP/路由器）：如何在互联网中找到对方
+-   传输层（TCP/UDP）：如何保证消息的可靠传递
+-   应用层（HTTP/FTP/DNS/SMTP/POP3）：跟具体应用相关的消息格式
 
 ## URL（应用层）
 
@@ -18,9 +18,9 @@
 
 一些细节：
 
-- 当协议是 http 端口为 80 时，端口可以省略
-- 当协议是 https 端口为 443 时，端口可以省略
-- schema/domain/path 是必填的，其他的根据具体
+-   当协议是 http 端口为 80 时，端口可以省略
+-   当协议是 https 端口为 443 时，端口可以省略
+-   schema/domain/path 是必填的，其他的根据情况
 
 ## HTTP
 
@@ -106,20 +106,20 @@ form 表单：就是浏览器提供给用户的发起请求的元素
 
 ```html
 <body>
-  <form>
-    <label>账号: <input type="text" name="username" /></label>
-    <label>密码: <input type="password" name="pwd" /></label>
-    <button type="submot">submit</button>
-  </form>
+    <form>
+        <label>账号: <input type="text" name="username" /></label>
+        <label>密码: <input type="password" name="pwd" /></label>
+        <button type="submot">submit</button>
+    </form>
 </body>
 <script>
-  const form = document.querySelector("form");
-  form.onsubmit = (e) => {
-    // 能阻止表单的提交行为和浏览器的自动刷新行为
-    // 为什么会自动刷新，其实就是表单请求的方式为借助浏览器自动发起请求的能力，改变了当前窗口的URL，相当于用地址栏请求。而平时使用的ajax方式则是借用代码发起请求的能力
-    e.preventDefault();
-    console.log("submit");
-  };
+    const form = document.querySelector("form");
+    form.onsubmit = (e) => {
+        // 能阻止表单的提交行为和浏览器的自动刷新行为
+        // 为什么会自动刷新，其实就是表单请求的方式为借助浏览器自动发起请求的能力，改变了当前窗口的URL，相当于用地址栏请求。而平时使用的ajax方式则是借用代码发起请求的能力
+        e.preventDefault();
+        console.log("submit");
+    };
 </script>
 ```
 
@@ -136,18 +136,18 @@ form 表单：就是浏览器提供给用户的发起请求的元素
 
 ```js
 async function readStream() {
-  const resp = await fetch("");
-  // 流式读取
-  const reader = resp.body.getReader();
-  const textDecoder = new TextDecoder();
-  while (1) {
-    // vale 为二进制数据
-    const { done, value } = await reader.read();
-    if (done) {
-      break;
+    const resp = await fetch("");
+    // 流式读取
+    const reader = resp.body.getReader();
+    const textDecoder = new TextDecoder();
+    while (1) {
+        // vale 为二进制数据
+        const { done, value } = await reader.read();
+        if (done) {
+            break;
+        }
+        console.log(textDecoder.decode(value));
     }
-    console.log(textDecoder.decode(value));
-  }
 }
 ```
 
@@ -174,17 +174,17 @@ async function readStream() {
 
 基本理念
 
-- 只要服务器明确表示允许，则效验通过
-- 服务器明确拒绝或没有表示，则效验不通过
+-   只要服务器明确表示允许，则效验通过
+-   服务器明确拒绝或没有表示，则效验不通过
 
 请求分类，简单请求也可能跨域，只能用来判断是否会发起 OPTIONS 预检请求
 
-- 简单请求
-  - 请求方式 GET/POST/HEAD 之一
-  - 头部字段满足 CORS 安全规范（浏览器默认自带的头部字段都是满足安全规范的，只要开发者不改动和新增头部，就不会打破此条规则）
-  - 如果有 Content-Type ，必须是这几个值(text/plain、multipart/form-data、application/x-www-form-urlencoded)
-- 预检请求
-  - 除了简单请求的都是预检请求
+-   简单请求
+    -   请求方式 GET/POST/HEAD 之一
+    -   头部字段满足 CORS 安全规范（浏览器默认自带的头部字段都是满足安全规范的，只要开发者不改动和新增头部，就不会打破此条规则）
+    -   如果有 Content-Type ，必须是这几个值(text/plain、multipart/form-data、application/x-www-form-urlencoded)
+-   预检请求
+    -   除了简单请求的都是预检请求
 
 预检请求下，浏览器会认为该请求可能有风险，会先自己发出一个 OPTIONS 请求，询问服务端是否可以通信，如果不可以直接出发跨域错误
 
@@ -192,23 +192,23 @@ async function readStream() {
 
 浏览器会添加几个头，大致告诉服务端这次请求的信息
 
-- Origin -> 源
-- Access-Control-Request-Method -> 实际要发出的请求方式
-- Access-Control-Request-Headers -> 这次请求有哪些头做了修改
+-   Origin -> 源
+-   Access-Control-Request-Method -> 实际要发出的请求方式
+-   Access-Control-Request-Headers -> 这次请求有哪些头做了修改
 
 服务端要通过这个检查需要返回几个头对应
 
-- Access-Control-Allow-Origin -> 允许的源
-- Access-Control-Allow-Methods -> 允许的请求方式（可以有多个）
-- Access-Control-Allow-Headers -> 这次请求有哪些头做了修改（允许修改的头）
+-   Access-Control-Allow-Origin -> 允许的源
+-   Access-Control-Allow-Methods -> 允许的请求方式（可以有多个）
+-   Access-Control-Allow-Headers -> 这次请求有哪些头做了修改（允许修改的字段）
 
 修改都能满足的情况下才会通过 OPTIONS 请求发出真正的请求
 
 **cookie**
 
-- 有 cookie 的情况，服务端需要返回头 Access-Control-Allow-Credentials: true
-- 对于一个附带身份凭证的请求，若服务器没有明确告知，浏览器仍然视为跨域被拒绝。
-- 对于附带身份凭证的请求，服务器不得设置 Access-Control-Allow-Origin 为 \*
+-   有 cookie 的情况，服务端需要返回头 Access-Control-Allow-Credentials: true
+-   对于一个附带身份凭证的请求，若服务器没有明确告知，浏览器仍然视为跨域被拒绝。
+-   对于附带身份凭证的请求，服务器不得设置 Access-Control-Allow-Origin 为 \*
 
 **关于跨域获取响应头**
 
@@ -220,9 +220,9 @@ async function readStream() {
 
 请求：
 
-- 仅能使用 GET 请求
-- 容易产生安全隐患(XSS 攻击)
-- 容易被非法站点调用
+-   仅能使用 GET 请求
+-   容易产生安全隐患(XSS 攻击)
+-   容易被非法站点调用
 
 #### 代理
 
