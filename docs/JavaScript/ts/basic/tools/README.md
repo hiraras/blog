@@ -145,5 +145,10 @@ const p: Param = [2, 2]; // 报错
 将类型 T 中，存在于 U 的 key 去除
 
 ```js
+// 当T和U都是对象类型时，以下3种都等价
 type ExcludeKeys<T, U> = Pick<T, Exclude<keyof T, keyof U>>
+type ExcludeKey<T, U> = Omit<T, keyof U>
+type ExcludeKey<T, U> = {
+  [P in keyof T as P extends keyof U ? never : P]: T[P]
+}
 ```

@@ -6,7 +6,7 @@
 
 1. preload
 
-在当前页面中，你可以指定可能或很快就需要的资源在其页面生命周期的早期——浏览器的主渲染机制介入前就进行预加载，这可以让对应的资源更早的得到加载并使用，也更不易阻塞页面的初步渲染，进而提升性能
+在当前页面中，你可以指定可能或很快就需要的资源在其页面生命周期的早期[浏览器的主渲染机制介入前]就进行预加载，这可以让对应的资源更早的得到加载并使用，也更不易阻塞页面的初步渲染，进而提升性能
 
 关键字 preload 作为元素 <link> 的属性 rel 的值，表示用户十分有可能需要在当前浏览中加载目标资源，所以浏览器必须预先获取和缓存对应资源
 
@@ -14,26 +14,26 @@
 
 ```html
 <link
-  as="script"
-  rel="preload"
-  href="/webpack-runtime-732352b70a6d0733ac95.js"
+    as="script"
+    rel="preload"
+    href="/webpack-runtime-732352b70a6d0733ac95.js"
 />
 ```
 
 可以预加载的资源有很多，现在浏览器支持的主要有：
 
-- **audio**：音频文件，通常用于 audio 标签
-- **document**: 旨在由 frame 或嵌入的 HTML 文档
-- **embed**: 要嵌入到 embed 元素中的资源
-- **fetch**: 要通过 fetch 或 XHR 请求访问的资源，例如 ArrayBuffer 或 JSON 文件
-- **font**: 字体文件
-- **image**: 图像文件
-- **object**: 要嵌入到 object 元素中的资源
-- **script**: JavaScript 文件
-- **style**: CSS 样式表
-- **track**: WebVTT 文件
-- **worker**: 一个 JavaScript 网络工作者或共享工作者
-- **video**: 视频文件，通常用于 video 标签
+-   **audio**：音频文件，通常用于 audio 标签
+-   **document**: 旨在由 frame 或嵌入的 HTML 文档
+-   **embed**: 要嵌入到 embed 元素中的资源
+-   **fetch**: 要通过 fetch 或 XHR 请求访问的资源，例如 ArrayBuffer 或 JSON 文件
+-   **font**: 字体文件
+-   **image**: 图像文件
+-   **object**: 要嵌入到 object 元素中的资源
+-   **script**: JavaScript 文件
+-   **style**: CSS 样式表
+-   **track**: WebVTT 文件
+-   **worker**: 一个 JavaScript 网络工作者或共享工作者
+-   **video**: 视频文件，通常用于 video 标签
 
 **注意**：使用 preload 作为 link 标签 rel 属性的属性值的话一定要记得在标签上添加 as 属性，其属性值就是要预加载的内容类型
 
@@ -67,7 +67,7 @@ DNS-prefetch (DNS 预获取) 是尝试在请求资源之前解析域名。这可
 
 4. prefetch
 
-关键字 prefetch 作为元素 的属性 rel 的值，是为了提示浏览器，用户未来的浏览有可能需要加载目标资源，所以浏览器会事先获取和缓存对应资源，优化用户体验 ——MDN
+关键字 prefetch 作为元素 的属性 rel 的值，是为了提示浏览器，用户未来的浏览有可能需要加载目标资源，所以浏览器会事先获取和缓存对应资源，优化用户体验 —— MDN
 
 上面的解释已经很通俗易懂了，就是告诉浏览器用户未来可能需要这些资源，这样浏览器可以提前获取这些资源，等到用户真正需要使用这些资源的时候一般都已经加载好了，内容展示就会十分的流畅
 
@@ -75,9 +75,9 @@ DNS-prefetch (DNS 预获取) 是尝试在请求资源之前解析域名。这可
 
 ```html
 <link
-  rel="prefetch"
-  href="/page-data/docs/getting-started.html/page-data.json"
-  crossorigin="anonymous"
-  as="fetch"
+    rel="prefetch"
+    href="/page-data/docs/getting-started.html/page-data.json"
+    crossorigin="anonymous"
+    as="fetch"
 />
 ```
