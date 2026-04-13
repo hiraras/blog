@@ -6,14 +6,14 @@
 
 ```ts
 interface A {
-  a: number;
-  b: string;
-  c: boolean;
+    a: number;
+    b: string;
+    c: boolean;
 }
 
 interface B {
-  a: string;
-  b: number;
+    a: string;
+    b: number;
 }
 
 // 两种方式一样
@@ -41,15 +41,15 @@ type PA = interface {
 
 ```ts
 type A = {
-  a?: number;
-  b: string;
+    a?: number;
+    b: string;
 };
 
 type B = Required<A>;
 
 const a: B = {
-  b: "2",
-  a: 1,
+    b: "2",
+    a: 1,
 };
 ```
 
@@ -57,9 +57,9 @@ const a: B = {
 
 ```ts
 interface A {
-  a: number;
-  b: string;
-  c: boolean;
+    a: number;
+    b: string;
+    c: boolean;
 }
 
 type Pi = Pick<A, "a" | "b">;
@@ -68,9 +68,9 @@ type Pi = Pick<A, "a" | "b">;
 type Pi = Pick<A, "a" | "b" | "d">; // 报错
 
 const pi: Pi = {
-  a: 1,
-  b: "2",
-  c: true, // 报错
+    a: 1,
+    b: "2",
+    c: true, // 报错
 };
 ```
 
@@ -80,9 +80,9 @@ const pi: Pi = {
 type R = Readonly<A>;
 
 const r: R = {
-  a: 1,
-  b: "2",
-  c: true,
+    a: 1,
+    b: "2",
+    c: true,
 };
 
 r.a = 2; // 报错
@@ -92,9 +92,9 @@ r.a = 2; // 报错
 
 ```ts
 const obj: Record<string, number> = {
-  1: 1, // 正常
-  2: "", // 报错
-  [Symbol()]: 2, // 正常
+    1: 1, // 正常
+    2: "", // 报错
+    [Symbol()]: 2, // 正常
 };
 ```
 
@@ -112,10 +112,10 @@ const t: T = 3; // ok
 
 ```ts
 function test(a: number | string) {
-  if (typeof a === "string") {
-    return "1";
-  }
-  return 1;
+    if (typeof a === "string") {
+        return "1";
+    }
+    return 1;
 }
 
 type Return = ReturnType<typeof test>;
@@ -129,10 +129,10 @@ const re: Return = 2; // 报错
 
 ```ts
 function test(a: number | string, b: string) {
-  if (typeof a === "string") {
-    return "1";
-  }
-  return 1;
+    if (typeof a === "string") {
+        return "1";
+    }
+    return 1;
 }
 type Param = Parameters<typeof test>;
 const p: Param = [2, "2"]; // ok

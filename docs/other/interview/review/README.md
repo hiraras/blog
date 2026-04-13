@@ -1,14 +1,14 @@
 # 面试复习
 
-- js 基础：es6 文档、this、作用域、继承、正则、事件循环、new、垃圾回收
-- css：flex、grid、bfc 条件及其应用
-- 网络安全：常见攻击手段及预防
-- 网络请求相关
-- react：react、redux、react-router、hooks
-- ts
-- 面试题
-- 过去记录的技术日记
-- 写简历/面试的时候对一项技术，需要知道为什么用它，它能带来什么效益，再扩展到更广的解决相同问题有哪些不同的方案，为什么最终选了它。
+-   js 基础：es6 文档、this、作用域、继承、正则、事件循环、new、垃圾回收
+-   css：flex、grid、bfc 条件及其应用
+-   网络安全：常见攻击手段及预防
+-   网络请求相关
+-   react：react、redux、react-router、hooks
+-   ts
+-   面试题
+-   过去记录的技术日记
+-   写简历/面试的时候对一项技术，需要知道为什么用它，它能带来什么效益，再扩展到更广的解决相同问题有哪些不同的方案，为什么最终选了它。
 
 相关链接：https://juejin.cn/post/6844903885488783374
 
@@ -64,13 +64,21 @@ meet48:
 
 1. 路由规则
 2. 项目文件夹分类规范
+
+    - .env: 根据不同环境值有所变化的配置项
+    - config: 一些需要配置的模块的配置项放入(需要配置的 npm 包，如 wagmi)，也可以建一个包含项目公共配置的[项目配置文件]，如默认页码大小配置
+    - common: 应该跟活动/模块走，因为多个界面应该是属于同一个活动才需要共用的配置
+    - utils: 通用的辅助方法，和活动或部分模块相关的方法应该放在 common
+    - constants: 消除全局魔术字符串的时候可以使用，其他可以放到 common 中
+
 3. ts 类型定义规范
 4. 状态管理规范
 5. 跨项目公用组件库
-6. 多个活动并行时的分支管理
-7. 权限管理
-8. 接口联调
-9. 代码 review
+6. 联邦模块
+7. 多个活动并行时的分支管理
+8. 权限管理
+9. 接口联调
+10. 代码 review
 
 ### 路由规则
 
@@ -85,8 +93,8 @@ meet48:
 
 ### 状态管理规范
 
-1. 哪些东西是可以放到全局的
-2. 是否可以使用 context 降低内存压力
+1. 哪些东西是可以放到全局的 - 需要共享的都可以放，不用担心内存，浏览器其实抗的住，另外，改变单个状态不会影响到其他状态
+2. 是否可以使用 context 降低内存压力 - 不行，不常更改的状态可放，主要是因为改变某个状态时，context 内的所有属性相关的消费组件都会更新
 
 ### 跨项目公用组件库
 
@@ -125,26 +133,28 @@ meet48:
 
 1. 项目优化
 2. 项目模板快速建立
-3. 项目迁移
+3. 项目迁移 - 平台迁移（基础 api 二次封装）/ 框架迁移
 4. 技术拓展
 
 ### 项目优化
 
 1. 项目启动/打包速度优化
 2. 代码体积分析
+    - webpack: webpack-bundle-analyzer/speed-measure-webpack-plugin(速度分析)
+    - vite: rollup-plugin-visualizer（推荐）/vite-bundle-visualizer
 3. 代码压缩(terser)
-4. thunk split
+4. split thunk - webpack(`optimization.splitChunks`) 和 vite(`build.rollupOptions.output`) 的 split chunk 功能都是内置的
 5. 雪碧图
-6. 图片响应式适配
+6. 图片响应式适配 - srcset/sizes，浏览器自动匹配，不需要 js 执行
 7. 静态文件上传 cdn/压缩
 8. performance 分析界面性能
 9. 代码运行效率优化(减少递归/尾调优化)
 10. 项目全局错误处理
 11. 动态加载
 12. 资源预加载
-13. 文件引用 async/defer
+13. js 文件引用 async/defer
 14. http 请求优化
-15. tree shaking
+15. tree shaking - webpack/vite 内置
 16. 缓存优化
 17. 模块热替换
 18. 使用新的浏览器特性优化效率(requestIdleCallback/queueMicrotask 等)

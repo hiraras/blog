@@ -4,7 +4,7 @@
 
 1. 旧的版本的 ts
 
-- 新建 global.d.ts 文件，并加入如下代码
+-   新建 global.d.ts 文件，并加入如下代码
 
 **注意**：如果没有`export {}`，可能会报 `Augmentations for the global scope can only be directly nested in external modules or ambient module declarations.ts(2669)` 这个错误，因为如果只有 declare 这个文件会被当做一个全局的 ts 脚本，而不是模块，加上 export 就能让它以模块解析。而在 ts 中，能够类型扩展的只有 interface、namespace、module，脚本是不可以的，所以就会报错
 
@@ -17,29 +17,29 @@ declare global {
 }
 ```
 
-- 将 global.d.ts 加入到 ts 文件列表中(tsconfig.json)
+-   将 global.d.ts 加入到 ts 文件列表中(tsconfig.json)
 
 ```json
 {
-  "include": ["global.d.ts"]
+    "include": ["global.d.ts"]
 }
 ```
 
 2. 新版的 ts
 
-- 新建 global.d.ts 文件，并加入如下代码
+-   新建 global.d.ts 文件，并加入如下代码
 
 ```js
 interface Window {
-  gtag: (event: string, type: string, params: any) => void;
+    gtag: (event: string, type: string, params: any) => void;
 }
 ```
 
-- 将 global.d.ts 加入到 ts 文件列表中(tsconfig.json)
+-   将 global.d.ts 加入到 ts 文件列表中(tsconfig.json)
 
 ```json
 {
-  "include": ["global.d.ts"]
+    "include": ["global.d.ts"]
 }
 ```
 
@@ -74,18 +74,18 @@ log("abd");
 
 ```ts
 interface ComplexObject {
-  option1: string;
-  option2: number;
-  option3?: boolean;
+    option1: string;
+    option2: number;
+    option3?: boolean;
 }
 
 type CopyObject<T> = {
-  [P in keyof T]: T[P];
+    [P in keyof T]: T[P];
 };
 
 let copy: CopyObject<ComplexObject> = {
-  option1: "x",
-  option2: 12,
+    option1: "x",
+    option2: 12,
 };
 ```
 
@@ -93,21 +93,23 @@ let copy: CopyObject<ComplexObject> = {
 
 ```ts
 interface ComplexObject {
-  option1: string;
-  option2: number;
-  option3?: boolean;
+    option1: string;
+    option2: number;
+    option3?: boolean;
 }
 
 type NonKeyObj<T> = {
-  [P in keyof T as never]: T[P];
+    [P in keyof T as never]: T[P];
 };
 
 let copy: NonKeyObj<ComplexObject> = {
-  option1: `1`, // 虽然不会报错（可能是环境配置问题），但是写键的时候也不会提示
+    option1: `1`, // 虽然不会报错（可能是环境配置问题），但是写键的时候也不会提示
 };
 ```
 
 ## 用 extends 判断类型
+
+extends 表示左边为右边的子集
 
 ```ts
 type F = string extends string ? true : false;
