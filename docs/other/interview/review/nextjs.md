@@ -290,13 +290,16 @@ export default function Error({
 ```tsx
 import { notFound } from "next/navigation";
 
-const id = (await props.params).id;
-const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
-]);
-if (!invoice) {
-    notFound();
+export default async function Page(props: Props) {
+    const id = (await props.params).id;
+    const [invoice, customers] = await Promise.all([
+        fetchInvoiceById(id),
+        fetchCustomers(),
+    ]);
+    if (!invoice) {
+        notFound();
+    }
+    return <div>...</div>;
 }
 ```
 
@@ -599,7 +602,7 @@ export const { auth, signIn, signOut } = NextAuth({
 });
 ```
 
-**只要配置了 GIthub 的 provider 就能实现 github 的第三方登陆了吗？如果同时配置多个，它们会都支持？配置多个之后 signIn 的调用是否需要写一些兼容代码？**
+**只要配置了 Github 的 provider 就能实现 github 的第三方登陆了吗？如果同时配置多个，它们会都支持？配置多个之后 signIn 的调用是否需要写一些兼容代码？**
 
 基本是这样：
 
