@@ -2,6 +2,19 @@
 
 单仓管理
 
+monorepo相比传统的一个项目一个git仓库，带来了哪些好处
+
+Monorepo 相对「一项目一仓库」，主要好处：
+
+1. **原子变更**：跨模块/前后端/公共库一次 PR 改完，避免多仓库版本对不齐、发版顺序扯皮。
+2. **依赖一致**：共用一套 lockfile、工具链、TypeScript/ESLint 配置，减少「各仓各一套」的漂移。
+3. **重构成本低**：改公共 API 可全仓一起改，编译/类型检查能立刻暴露所有受影响处。
+4. **代码复用简单**：公共包直接 workspace 引用，不用发 npm、不用维护多仓版本号。
+5. **CI 可增量**：只跑受影响包（Turborepo/Nx 等），大仓也能控构建时间。
+6. **统一治理**：规范、安全扫描、CODEOWNERS、依赖升级在一处管，协作边界更清晰。
+
+代价是：仓库变大、权限粒度更粗、需要边界规则和 CI 治理；小团队或强隔离场景，多仓库有时更合适。
+
 # 规范的统一化管理
 
 ## pnpm
@@ -586,3 +599,87 @@ pnpm publish:utils
     }
 }
 ```
+
+## monorepo 项目里不同项目组怎么保证不越界
+
+这是一个 monorepo 治理问题，不依赖你仓库里的具体配置，可以从「边界定义 → 工具约束 → 流程兜底」三层来理解。
+
+## 1. 先划清边界（比工具更重要）
+
+不同项目组首先要约定：
+
+| 维度             | 约定内容                                                               |
+| ---------------- | ---------------------------------------------------------------------- |
+| **目录归属**     | 哪些包/目录属于哪个组（如 `apps/team-a/*`、`packages/shared/*`）       |
+| **依赖方向**     | 谁能依赖谁（例如：业务 app → 公共 lib，禁止反向；禁止跨组直接 import） |
+| **共享 vs 私有** | 什么必须进 `packages/shared`，什么只能留在组内                         |
+| **API 契约**     | 跨组调用走 published package / 明确 export，而不是 deep import         |
+
+没有书面约定，工具也只能事后拦，拦不住「约定俗成」的越界。
+
+## 2. 技术约束（自动化 enforcement）
+
+### 依赖规则
+
+- **pnpm**：`package.json` 里用 `dependenciesMeta`、workspace 协议，配合 **只允许声明过的 workspace 依赖**
+- **Nx / Turborepo**：用 **tags**（如 `scope:team-a`）+ **module boundary rules**，构建/ lint 时检查
+- **ESLint**：`eslint-plugin-boundaries`、`eslint-plugin-import` 限制 import 路径
+- **dependency-cruiser**：在 CI 里跑，禁止非法依赖图（如 A 组 app 直接依赖 B 组内部包）
+
+### 包可见性
+
+- 组内包：`private: true`，不对外 export 或不在 root workspace 里「公开」
+- 跨组只通过 **显式发布的 internal package**（版本号或 changeset），而不是相对路径乱引
+
+### CI 门禁
+
+- PR 必须过：lint（边界规则）、typecheck、受影响包的 test/build
+- **CODEOWNERS**：改到别的组目录必须对应组 review
+- 可选：**CODEOWNERS + required reviewers**，越界改动能被拦在 merge 前
+
+## 3. 流程与文化
+
+- **RFC / ADR**：跨组改 shared 包要先提案，避免「顺手改一下」影响全员
+- **Changesets / 版本**：shared 包变更要有 changelog 和 semver，下游组能感知 breaking change
+- **On-call / 负责人**：每个 scope 有 owner，越界 PR 可以 `@` 对应组
+- **定期依赖图审查**：用 dependency-cruiser 或 Nx graph 看图，比 grep 更直观
+
+## 4. 常见反模式（容易越界）
+
+```
+❌ team-a 直接 import team-b/src/internal/foo.ts
+❌ 在 shared 里塞 team-a 专用逻辑
+❌ 复制粘贴 B 组代码到 A 组「先跑起来」
+❌ 改 root 配置、共享 CI、全局 tsconfig 不通知其他组
+```
+
+更稳妥的做法：
+
+```
+✅ team-a → @org/team-b-public-api（明确 export 的小 surface）
+✅ 组内细节留在 team-b 私有包
+✅ shared 只放真正多组复用的东西，且有 owner 和 RFC
+```
+
+## 5. 若你用的是 pnpm workspace（常见形态）
+
+典型结构：
+
+```
+apps/
+  team-a-app/
+  team-b-app/
+packages/
+  shared-ui/      # 多组共用，有 RFC
+  team-a-lib/     # 仅 A 组
+  team-b-lib/     # 仅 B 组
+```
+
+在 root 用 **pnpm-workspace.yaml** 管 workspace，再配合 **eslint + dependency-cruiser 或 Nx boundaries**，在 CI 里 `pnpm lint && pnpm check:deps` 一类脚本统一跑。
+
+---
+
+**简要结论**：  
+保证不越界 = **目录/依赖约定写清楚** + **lint/dependency 规则自动拦** + **CODEOWNERS + CI** + **shared 变更走 RFC/changeset**。工具选一套坚持跑在 CI 上即可，不必堆很多。
+
+如果你愿意，我可以结合你当前 monorepo 的目录和 `package.json` / workspace 配置，给一版更贴你项目的边界方案和推荐工具组合（需要你 @ 相关文件或允许我扫 `pnpm-workspace.yaml`、根 `package.json` 等少量配置）。
