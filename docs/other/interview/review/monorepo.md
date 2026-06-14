@@ -91,6 +91,15 @@ pnpm -Dw add typescript @types/node
 }
 ```
 
+**注意点**
+
+- 子包的ts配置字段会覆盖根目录的，而不会合并
+- 项目中使用了浏览器端的api，需要在lib字段添加 "DOM"
+- ts会读取 include 和 files 中指定的文件，递归地包含这些文件导入/引用的所有文件，最后形成完整的编译上下文
+- files会精确指定文件列表，不会检查它的依赖
+- exclude用户排除文件，优先级高于include
+- tsc -p [目标项目的tsconfig.build.json文件的路径]会自动生成每个源文件的类型文件
+
 ### prettier
 
 ```bash
@@ -211,7 +220,7 @@ export default defineConfig(
                 ...globals.node,
             },
         },
-    }
+    },
 );
 ```
 
@@ -378,17 +387,19 @@ pnpm -Dw add lint-staged
 
 ```js
 // .lintstagedrc.js
+// 每个字段表示，对应扩展名的文件在staged的状态时会执行后面的命令
 export default {
     "*.{js,ts,mjs,cjs,json,tsx,css,less,scss,vue,html,md}": ["cspell lint"],
-    "*.{js,ts,vue,md}": ["prettier --write", "eslint"],
+    "*.{js,ts,vue,tsx}": ["prettier --write", "eslint"],
+    "*.md": ["prettier --write"], // .md 文件单独执行 prettier
 };
 ```
 
 当运行 git-cz 命令的时候，提交之前会自动运行 precommit 命令。
 这里就有一个问题
 
--   如果提交时使用 pnpm commit，会执行两次 precommit 命令(git-cz 一次，husky 一次)
--   如果去除 husky 里的 precommit，提交时不使用 pnpm commit，直接使用 git commit -m"xxx" 就会跳过 precommit
+- 如果提交时使用 pnpm commit，会执行两次 precommit 命令(git-cz 一次，husky 一次)
+- 如果去除 husky 里的 precommit，提交时不使用 pnpm commit，直接使用 git commit -m"xxx" 就会跳过 precommit
 
 # 代码的统一化管理
 
@@ -540,3 +551,38 @@ pnpm publish:utils
 ```
 
 发布完成后的包会将依赖里的版本号从 "workspace:\*" 改为正常的版本号
+
+## package.json 字段
+
+- files 字段指定了哪些文件会被包含在发布的包中，通常会包含编译后的文件夹和类型定义文件
+- peerDependencies 字段指定了哪些包会被排除，并需要在引用项目里手动安装兼容版本
+- exports 字段指定了模块的导出路径和类型
+
+### 关于 main/module/types vs exports
+
+- main/module/types 是旧版的包入口指定文件，exports是新的
+- exports可以被识别的时候(低版本npm可能不支持)会覆盖main的配置
+- 当只有main，没有exports字段的时候，`import internalThing from 'your-package/internal/helper.js'`; 还是可以像这样通过路径访问到包内部的其他文件
+- 有 exports 时，只有显式导出的路径可以访问。否则会报错
+- 使用的时候推荐两者一起使用，main作为兜底
+
+示例
+
+```json
+{
+    "exports": {
+        ".": {
+            // 包的默认入口，即 require('your-package')
+            "import": "./dist/index.mjs", // ESM 环境使用
+            "require": "./dist/index.cjs", // CJS 环境使用
+            "types": "./dist/index.d.ts" // TypeScript 使用
+        },
+        "./utils": {
+            // 子路径导出: import('your-package/utils')
+            "import": "./dist/utils.mjs",
+            "require": "./dist/utils.cjs"
+        },
+        "./style.css": "./dist/index.css" // import '@hirara/components/style.css'
+    }
+}
+```
